@@ -1,0 +1,80 @@
+body {
+	background-color: #c2dcde;
+}
+canvas {
+    border:1px solid #d3d3d3;
+    background-color: #f1f1f1;
+}
+button {
+	border: 1px solid black;
+	box-shadow: 2px 2px gray;
+	width: 43px;
+	height: 25px;
+	display:inline-block;
+}
+.button {
+	width: auto;
+	height: auto;
+}
+button:active {
+	box-shadow: 1px 1px gray;
+	transform: translateY(1px);
+}
+button.White {
+	background-color: white;
+}
+button.White:hover {
+	background-color: gray;
+}
+button.Red {
+	background-color: red;
+}
+button.Red:hover {
+	background-color: darkred;
+}
+button.Blue {
+	background-color: blue;
+	color: white;
+}
+button.Blue:hover {
+	background-color: darkblue;
+}
+button.Green {
+	background-color: green;
+	color: white;
+}
+button.Green:hover {
+	background-color: darkgreen;
+}
+button.Purple {
+	background-color: purple;
+	color: white;
+}
+button.Purple:hover {
+	background-color: #660066;
+}
+button.Yellow {
+	background-color: #e6e600;
+}
+button.Yellow:hover {
+	background-color:#cccc00;
+}
+/*@media only screen and (orientation:portrait){
+	#wrapper { display:none; }
+}*/
+#wrapper {
+	/*width: 100%
+	height:100%
+	margin: auto;
+	text-align: center;*/
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
+	width: 50%;
+}
+.center {
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
+	width: 50%;
+}
