@@ -18,12 +18,11 @@ function App() {
       <Navigation/>
       <div className="container-fluid">
         <Switch>
+          <Route path="/modelrail">
+            <img src="/ModelRail.jpg" alt="Lego Hogwarts Express" width="40%" height="40%"></img>
+          </Route>
           <Route path="/">
             <Home/>
-          </Route>
-          <Route path="/modelrail">
-            <p>test</p>
-            <img src="%PUBLIC_URL%/ModelRail.jpg" alt="Lego Hogwarts Express"></img>
           </Route>
         </Switch>
       </div>

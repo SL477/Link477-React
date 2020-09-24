@@ -7,7 +7,7 @@ function Home() {
                 <h1>Hi I&apos;m Tom</h1>
                 <p>I work as a developer for a law firm as a developer for their <a href="https://www.elite.com/3e/" target="_blank" rel="noopener noreferrer">Elite 3E</a> &amp; <a href="https://www.elite.com/3e/matter-management/" target="_blank" rel="noopener noreferrer">MatterSphere</a> systems using VB.Net, C# and SQL.
                     In my spare time I am working on various apps using JavaScript, React and Python.</p>
-                <p>When I&apos;m not on the PC, I&apos;m either playing with Lego or the model railway.</p>
+                <p>When I&apos;m not on the PC, I&apos;m either writing, playing with Lego or the model railway.</p>
             </section>
             <section>
                 <h2>Projects</h2>

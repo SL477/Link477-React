@@ -14,28 +14,28 @@ var myGameArea = {
 		this.interval = setInterval(updateGameArea, 20);
 	},
 	clear : function() {
-		this.context.clearRect(0,0,this.canvas.width, this.canvas.height);
+		this.context.clearRect(0,0,this.canvas.width * 0.8, this.canvas.height * 0.8);
 	}
 }
 var paddleHeight = myGameArea.canvas.height / 20;
 function startGame() {
-	myGameArea.canvas.setAttribute('width', window.innerWidth);
-	myGameArea.canvas.setAttribute('height', window.innerHeight);
+	myGameArea.canvas.setAttribute('width', window.innerWidth * 0.8);
+	myGameArea.canvas.setAttribute('height', window.innerHeight * 0.8);
 	paddleHeight = myGameArea.canvas.height / 20;
 	myGameArea.start();
 	updateGameArea();
 	
 	ballX = 40;
 	ballY = 40;
-	vballX = 2;
-	vballY = 2;
+	vballX = 4;
+	vballY = 4;
 }
 
 function resetBall() {
 	ballX = 40;
 	ballY = 40;
-	vballX = 2;
-	vballY = 2;
+	vballX = 4;
+	vballY = 4;
 }
 
 function updateGameArea() {

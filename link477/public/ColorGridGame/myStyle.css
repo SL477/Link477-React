@@ -72,6 +72,12 @@ button.Yellow:hover {
 	margin-right: auto;
 	width: 50%;
 }
+#wrapper1 {
+	text-align: center;
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
+}
 .center {
 	display: block;
 	margin-left: auto;
