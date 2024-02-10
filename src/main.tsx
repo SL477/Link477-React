@@ -5,8 +5,9 @@ import StudentGrades from './Arrays';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.bundle.min';
 import './main.css';
-import Weather from './Weather';
-import Battleship from './battleship';
+import Weather from './weather/Weather';
+import Battleship from './battleship/battleship';
+import GameOfLife from './gameOfLife/GameOfLife';
 
 const router = createBrowserRouter([
   {
@@ -24,6 +25,10 @@ const router = createBrowserRouter([
   {
     path: '/battleship',
     element: <Battleship/>
+  },
+  {
+    path: 'gameoflife',
+    element: <GameOfLife/>
   }
 ]);
 

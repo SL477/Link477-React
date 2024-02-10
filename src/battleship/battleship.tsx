@@ -1,4 +1,4 @@
-import './battleship.css';
+import classes from './battleship.module.css';
 import React from 'react';
 
 class Position {
@@ -384,7 +384,7 @@ export default class Battleship extends React.Component {
             if (this.state.changeOver) {
                 disp = (
                     <div>
-                        <h1 className="centerItem">Battleship</h1>
+                        <h1 className={classes.centerItem}>Battleship</h1>
                         <p>Please pass device to player {this.state.currentPlayer}</p>
                         <p><b>Message:</b> {this.state.msg}</p>
                         <button className="btn btn-primary" onClick={this.recieveDevice}>Continue</button>
@@ -408,7 +408,7 @@ export default class Battleship extends React.Component {
                             <tr key={rowIndex}>
                                 {arr.map((a, colIndex) => {
                                     return (
-                                        <td key={colIndex} className={(a.ship? 'ship ' : '') + (a.hit? 'hit' : '')}>{a.hit? 'X' : a.shiptype? a.shiptype[0] : ''}</td>
+                                        <td key={colIndex} className={(a.ship? classes.ship : '') + (a.hit? classes.hit : '')}>{a.hit? 'X' : a.shiptype? a.shiptype[0] : ''}</td>
                                     );
                                 })}
                             </tr>
@@ -432,7 +432,7 @@ export default class Battleship extends React.Component {
                     <div>
                         <h1 className="centerItem">Battleship</h1>
                         <div className="container">
-                            <div className="board">
+                            <div className={classes.board}>
                                 <table className="grid">
                                     <thead>
                                         <tr>
@@ -451,7 +451,7 @@ export default class Battleship extends React.Component {
                                     <thead>
                                         <tr>
                                             <th colSpan="10" className="center">
-                                                Oppenent Board
+                                                Opponent Board
                                             </th>
                                         </tr>
                                     </thead>
@@ -483,7 +483,7 @@ export default class Battleship extends React.Component {
         else {
             disp = (
                 <div>
-                    <h1 className="centerItem">Battleship</h1>
+                    <h1 className={classes.centerItem}>Battleship</h1>
                     <fieldset>
                         <legend>Please chose oppenent</legend>
                         <button className="btn btn-primary" onClick={this.chooseHuman}>Human</button>
@@ -493,7 +493,7 @@ export default class Battleship extends React.Component {
             );
         }
         return (
-            <div  className="flex-container">
+            <div className={classes.flexContainer}>
                 <br/>
                 {disp}
             </div>

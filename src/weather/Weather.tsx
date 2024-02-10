@@ -1,4 +1,4 @@
-import './weather.css';
+import classes from './weather.module.css';
 import { useEffect, useState } from 'react';
 
 interface weatherData {
@@ -61,7 +61,7 @@ export default function Weather() {
     };
 
     return (
-        <div className="weatherBox">
+        <div className={classes.weatherBox}>
             {errorMsg === ''? (
                 <>
                     <h3>FreeCodeCamp Weather App</h3>
