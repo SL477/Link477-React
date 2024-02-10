@@ -5,6 +5,7 @@ import StudentGrades from './Arrays';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.bundle.min';
 import './main.css';
+import Weather from './Weather';
 
 const router = createBrowserRouter([
   {
@@ -14,6 +15,10 @@ const router = createBrowserRouter([
   {
     path: '/arrays',
     element: <StudentGrades/>
+  },
+  {
+    path: '/weather',
+    element: <Weather/>
   }
 ]);
 
