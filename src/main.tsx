@@ -6,6 +6,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.bundle.min';
 import './main.css';
 import Weather from './Weather';
+import Battleship from './battleship';
 
 const router = createBrowserRouter([
   {
@@ -19,6 +20,10 @@ const router = createBrowserRouter([
   {
     path: '/weather',
     element: <Weather/>
+  },
+  {
+    path: '/battleship',
+    element: <Battleship/>
   }
 ]);
 
