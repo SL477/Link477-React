@@ -1,0 +1,12 @@
+.cap {
+    text-transform: capitalize;
+}
+
+.weatherBox {
+    text-align: center;
+    color: gold;
+    height: 100vh;
+}
+.body {
+    background-color: black;
+}
