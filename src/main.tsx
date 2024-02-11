@@ -9,6 +9,7 @@ import Weather from './weather/Weather';
 import Battleship from './battleship/battleship';
 import GameOfLife from './gameOfLife/GameOfLife';
 import RockPaperScissors from './rockPaperScissors';
+import TicTacToe from './ticTacToe/tictactoe';
 
 const router = createBrowserRouter([
   {
@@ -34,6 +35,10 @@ const router = createBrowserRouter([
   {
     path: 'rockPaperScissors',
     element: <RockPaperScissors/>
+  },
+  {
+    path: 'tictactoe',
+    element: <TicTacToe/>
   }
 ]);
 
