@@ -61,7 +61,7 @@ export default function Weather() {
     };
 
     return (
-        <div className={classes.weatherBox}>
+        <div className={`${classes.weatherBox} ${classes.body}`}>
             {errorMsg === ''? (
                 <>
                     <h3>FreeCodeCamp Weather App</h3>

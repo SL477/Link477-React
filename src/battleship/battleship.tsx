@@ -408,7 +408,7 @@ export default class Battleship extends React.Component {
                             <tr key={rowIndex}>
                                 {arr.map((a, colIndex) => {
                                     return (
-                                        <td key={colIndex} className={(a.ship? classes.ship : '') + (a.hit? classes.hit : '')}>{a.hit? 'X' : a.shiptype? a.shiptype[0] : ''}</td>
+                                        <td key={colIndex} className={`${(a.ship? classes.ship : '')} ${(a.hit? classes.hit : '')} ${classes.td}`}>{a.hit? 'X' : a.shiptype? a.shiptype[0] : ''}</td>
                                     );
                                 })}
                             </tr>
@@ -421,7 +421,7 @@ export default class Battleship extends React.Component {
                             <tr key={rowIndex}>
                                 {arr.map((a, colIndex) => {
                                     return (
-                                        <td key={colIndex} className={(a.hit? 'hit' : '')/* + (a.ship? ' ship' : '')*/} onClick={() => {if (!a.hit) {this.sendAttack(colIndex,rowIndex);}}}></td>
+                                        <td key={colIndex} className={(a.hit? `${classes.hit} ${classes.td}` : classes.td)/* + (a.ship? ' ship' : '')*/} onClick={() => {if (!a.hit) {this.sendAttack(colIndex,rowIndex);}}}></td>
                                     );
                                 })}
                             </tr>
@@ -436,7 +436,7 @@ export default class Battleship extends React.Component {
                                 <table className="grid">
                                     <thead>
                                         <tr>
-                                            <th colSpan="10" className="center">
+                                            <th colSpan={10} className="center">
                                                 Your Board
                                             </th>
                                         </tr>
@@ -446,11 +446,11 @@ export default class Battleship extends React.Component {
                                     </tbody>
                                 </table>
                             </div>
-                            <div className="board">
+                            <div className={classes.board}>
                                 <table className="grid">
                                     <thead>
                                         <tr>
-                                            <th colSpan="10" className="center">
+                                            <th colSpan={10} className="center">
                                                 Opponent Board
                                             </th>
                                         </tr>

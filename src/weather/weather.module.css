@@ -5,7 +5,8 @@
 .weatherBox {
     text-align: center;
     color: gold;
+    height: 100vh;
 }
-body {
+.body {
     background-color: black;
 }
