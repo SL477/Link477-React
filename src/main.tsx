@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import { createHashRouter, RouterProvider } from 'react-router-dom';
 import StudentGrades from './Arrays';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.bundle.min';
@@ -11,7 +11,7 @@ import GameOfLife from './gameOfLife/GameOfLife';
 import RockPaperScissors from './rockPaperScissors';
 import TicTacToe from './ticTacToe/tictactoe';
 
-const router = createBrowserRouter([
+const router = createHashRouter([
   {
     path: '/',
     element: <div>Test</div>
