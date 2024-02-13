@@ -29,15 +29,15 @@ const router = createBrowserRouter([
     element: <Battleship/>
   },
   {
-    path: 'gameoflife',
+    path: '/gameoflife',
     element: <GameOfLife/>
   },
   {
-    path: 'rockPaperScissors',
+    path: '/rockPaperScissors',
     element: <RockPaperScissors/>
   },
   {
-    path: 'tictactoe',
+    path: '/tictactoe',
     element: <TicTacToe/>
   }
 ]);
