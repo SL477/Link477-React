@@ -1,35 +1,20 @@
 import classes from './GameOfLife.module.css';
-import React from 'react';
-let timer;
+import { useState, useEffect } from 'react';
 
-// eslint-disable-next-line no-undef
-export default class GameOfLife extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            grid: [],
-            rows: 16,
-            cols: 16,
-            started: false,
-            generation: 0,
-            isDebug: false
-        };
+export default function GameOfLife() {
+    const [grid, setGrid] = useState<number[][]>([]);
+    const [rows] = useState(16);
+    const [cols] = useState(16);
+    const [started, setStarted] = useState(false);
+    const [generation, setGeneration] = useState(0);
+    const [isDebug] = useState(false);
+    const [timer, setTimer] = useState<number>();
 
-        this.createGrid = this.createGrid.bind(this);
-        this.toggleLive = this.toggleLive.bind(this);
-        this.calcNeighbors = this.calcNeighbors.bind(this);
-        this.incrementGeneration = this.incrementGeneration.bind(this);
-        this.start = this.start.bind(this);
-        this.setGenerations = this.setGenerations.bind(this);
-        this.stop = this.stop.bind(this);
-        this.clearGrid = this.clearGrid.bind(this);
-    }
-
-    createGrid(isRandom) {
-        let newGrid = [];
-        for (let i = 0; i < this.state.rows; i++) {
-            let newRow = [];
-            for (let j = 0; j < this.state.cols; j++) {
+    const createGrid = (isRandom: boolean) => {
+        const newGrid = [];
+        for (let i = 0; i < rows; i++) {
+            const newRow = [];
+            for (let j = 0; j < cols; j++) {
                 if (isRandom) {
                     if (Math.floor(Math.random() * 10) > 7) {
                         newRow.push(1);
@@ -44,137 +29,128 @@ export default class GameOfLife extends React.Component {
             }
             newGrid.push(newRow);
         }
-        this.setState({grid: newGrid});
-    }
+        setGrid(newGrid);
+    };
 
-    componentDidMount() {
-        this.createGrid(true);
-        this.start();
-    }
+    useEffect(() => {
+        createGrid(true);
+    }, []);
 
-    toggleLive(row, col, current) {
-        if (!this.state.started) {
-            let newGrid = this.state.grid;
+    const toggleLive = (row: number, col: number, current: number) => {
+        if (!started) {
+            const newGrid = [...grid];
             newGrid[row][col] = current == 0? 1 : 0;
-            this.setState({grid: newGrid});
+            setGrid(newGrid);
         }
-    }
+    };
 
-    calcNeighbors(row, col) {
+    const calcNeighbors = (row: number, col: number) => {
         let ret = 0;
         // check all of the neighbouring cells and see if they are live or dead and return the number of live cells
-        let hasLeft = col > 0;
-        let hasRight = col < this.state.cols - 1;
-        if (row > 0) {
-            // has cells above
-            if (this.state.grid[row - 1][col] === 1) {
-                ret += 1;
-            }
-            if (hasLeft && this.state.grid[row - 1][col - 1] === 1) {
-                ret += 1;
-            }
-            if (hasRight && this.state.grid[row - 1][col + 1] === 1) {
-                ret += 1;
-            }
-        }
-
-        if (hasLeft && this.state.grid[row][col - 1] === 1) {
-            ret += 1;
-        }
-
-        if (hasRight && this.state.grid[row][col + 1] === 1) {
-            ret += 1;
-        }
-
-        //below row
-        if (row < this.state.rows - 1) {
-            if (this.state.grid[row + 1][col] === 1) {
-                ret += 1;
-            }
-            if (hasLeft && this.state.grid[row + 1][col - 1] === 1) {
-                ret += 1;
-            }
-            if (hasRight && this.state.grid[row + 1][col + 1] === 1) {
-                ret += 1;
-            }
-        }
-
-        return ret;
-    }
-
-    incrementGeneration() {
-        if (this.state.started) {
-            //console.log("generation");
-            let newGrid = [...this.state.grid];
-            for (let i = 0; i < this.state.rows; i++) {
-                for (let j = 0; j < this.state.cols; j++) {
-                    let numNeighbours = this.calcNeighbors(i, j);
-                    if (this.state.grid[i][j] === 1) {
-                        // live cell
-                        if (numNeighbours === 2 || numNeighbours === 3) {
-                            newGrid[i][j] = 1;
-                        }
-                        else {
-                            newGrid[i][j] = 0;
-                        }
-                    }
-                    else {
-                        // dead cell
-                        if (numNeighbours === 3) {
-                            newGrid[i][j] = 1;
-                        }
-                        else {
-                            newGrid[i][j] = 0;
-                        }
-                    }
+        const hasLeft = col > 0;
+        const hasRight = col < cols - 1;
+        if (grid.length > 0) {
+            if (row > 0) {
+                // has cells above
+                if (grid[row - 1][col] && grid[row - 1][col] == 1) {
+                    ret++;
+                }
+                if (hasLeft && grid[row - 1][col - 1] && grid[row - 1][col - 1] == 1) {
+                    ret++;
+                }
+                if (hasRight && grid[row - 1][col + 1] && grid[row - 1][col + 1] == 1) {
+                    ret ++;
                 }
             }
-            this.setState({
-                grid: newGrid,
-                generation: this.state.generation + 1
-            });
+
+            if (hasLeft && grid[row][col - 1] && grid[row][col - 1] == 1) {
+                ret++;
+            }
+
+            if (hasRight && col + 1 < cols  && grid[row][col + 1] && grid[row][col + 1] == 1) {
+                ret++;
+            }
+
+            // below row
+            if (row < rows - 1) {
+                if (grid[row + 1][col] && grid[row + 1][col] == 1) {
+                    ret++;
+                }
+                if (hasLeft && grid[row + 1][col - 1] && grid[row + 1][col - 1] == 1) {
+                    ret++;
+                }
+                if (hasRight && grid[row + 1][col + 1] && grid[row + 1][col + 1] == 1) {
+                    ret++;
+                }
+            }
         }
-    }
+        return ret;
+    };
 
-    start() {
-        this.setState({started: true}, this.setGenerations());
-    }
+    const incrementGeneration = () => {
+        const newGrid = [...grid];
+        for (let i = 0; i < rows; i++) {
+            for (let j = 0; j < cols; j++) {
+                const numNeighbours = calcNeighbors(i, j);
+                if (grid[i][j] === 1) {
+                    // live cell
+                    newGrid[i][j] = (numNeighbours === 2 || numNeighbours === 3)? 1 : 0;
+                }
+                else {
+                    // dead cell
+                    newGrid[i][j] = numNeighbours === 3? 1 : 0;
+                }
+            }
+        }
+        setGrid(newGrid);
+    };
 
-    setGenerations() {
-        //console.log("called");
-        timer = setInterval(this.incrementGeneration, 1000);
-    }
+    useEffect(() => {
+        if (started) {
+            setGeneration(generation + 1);
+        }
+    }, [grid, started]);
 
-    stop() {
+    const start = () => {
+        setStarted(true);
+        setGenerations();
+    };
+
+    const setGenerations = () => {
+        setTimer(setInterval(incrementGeneration, 1000));
+    };
+
+    const stop = () => {
         clearInterval(timer);
-        this.setState({started: false});
-    }
+        setStarted(false);
+    };
 
-    clearGrid() {
-        this.stop();
-        this.createGrid(false);
-        this.setState({started: false, generation: 0});
-    }
+    const clearGrid = () => {
+        stop();
+        createGrid(true);
+        setStarted(false);
+        setGeneration(0);
+    };
 
-    render() {
-        let grid = this.state.grid.map((row, i) => {return (
-            <div key={i} className={classes.row}>
-                {row.map((col, ind) => {return (
-                    <div key={ind} className={col === 1? `${classes.col} ${classes.hovered}` : classes.col} onClick={() => this.toggleLive(i, ind, col)}>{this.state.isDebug? this.calcNeighbors(i, ind) : null}</div>
-                );})}
+    return (
+        <div>
+            <div className='flex-container'>
+                {grid.map((row, i) => {
+                    return (
+                        <div key={i} className={classes.row}>
+                            {row.map((col, ind) => {
+                                return (
+                                    <div key={ind} className={col === 1? `${classes.col} ${classes.hovered}` : classes.col} 
+                                    onClick={() => toggleLive(i, ind, col)}>{isDebug? calcNeighbors(i, ind) : null}</div>
+                                );
+                            })}
+                        </div>
+                    );
+                })}
             </div>
-        );});
-        return (
-            <div>
-                <div className="flex-container">
-                    {grid}
-                </div>
-                <p>Generation: {this.state.generation}</p>
-                {/*<p>Started: {this.state.started.toString()}</p>
-                <button className="btn btn-primary" onClick={this.incrementGeneration}>Increment</button>*/}
-                <button className="btn btn-primary" onClick={this.state.started? this.stop : this.start}>Start/Pause</button>
-                <button className="btn btn-danger" onClick={this.clearGrid}>Clear</button>
-            </div>
-        );
-    }
+            <p>Generation: {generation}</p>
+            <button className='btn btn-primary' onClick={() => {started? stop() : start()}} type='button'>Start/Pause</button>
+            <button className='btn btn-danger' onClick={clearGrid} type='button'>Clear</button>
+        </div>
+    );
 }
