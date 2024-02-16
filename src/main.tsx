@@ -10,11 +10,12 @@ import Battleship from './battleship/battleship';
 import GameOfLife from './gameOfLife/GameOfLife';
 import RockPaperScissors from './rockPaperScissors';
 import TicTacToe from './ticTacToe/tictactoe';
+import Home from './home';
 
 const router = createHashRouter([
   {
     path: '/',
-    element: <div>Test</div>
+    element: <Home/>
   },
   {
     path: '/arrays',
