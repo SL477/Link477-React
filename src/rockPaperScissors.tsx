@@ -18,28 +18,13 @@ export default function RockPaperScissors() {
         }
         // scissors beats paper, paper beats rock, rock beats scissors
         if (playerSelection === 'ROCK') {
-            if (computerSelection === 'PAPER') {
-                return 'AI';
-            }
-            else {
-                return 'PLAYER';
-            }
+            return computerSelection === 'PAPER'? 'AI' : 'PLAYER';
         }
         else if (playerSelection === 'PAPER') {
-            if (computerSelection === 'ROCK') {
-                return 'PLAYER';
-            }
-            else {
-                return 'AI';
-            }
+            return computerSelection === 'ROCK'? 'PLAYER' : 'AI';
         }
         else {//scissors
-            if (computerSelection === 'ROCK') {
-                return 'AI';
-            }
-            else {
-                return 'PLAYER';
-            }
+            return computerSelection === 'ROCK'? 'AI' : 'PLAYER';
         }
     };
 
@@ -59,8 +44,17 @@ export default function RockPaperScissors() {
         setLastResult(result);
     };
 
+    const playAgain = () => {
+        setHumanScore(0);
+        setComputerScore(0);
+        setRoundNumber(0);
+        setLastPC('');
+        setLastHuman('');
+        setLastResult('');
+    };
+
     return (
-        <div>
+        <div className='text-center'>
             <p>My answer to <a target="_blank" rel="noopener" href="https://www.theodinproject.com/paths/foundations/courses/foundations/lessons/rock-paper-scissors">Odin Rock, Paper, Scissors</a></p>
             <p>Round Number: {roundNumber}</p>
             <p>Player Score: {humanScore}</p>
@@ -68,9 +62,14 @@ export default function RockPaperScissors() {
             <p>Last Computer Play: {lastPC}</p>
             <p>Last Player Play: {lastHuman}</p>
             <p>Last Result: {lastResult}</p>
-            <button type='button' className="btn btn-primary" onClick={() => humanPlay(RPS[0])}>Rock</button>
-            <button type='button' className="btn btn-primary" onClick={() => humanPlay(RPS[1])}>Paper</button>
-            <button type='button' className="btn btn-primary" onClick={() => humanPlay(RPS[2])}>Scissors</button>
+            {roundNumber < 5? <>
+                <button type='button' className="btn btn-primary" onClick={() => humanPlay(RPS[0])}>Rock</button>
+                <button type='button' className="btn btn-primary" onClick={() => humanPlay(RPS[1])}>Paper</button>
+                <button type='button' className="btn btn-primary" onClick={() => humanPlay(RPS[2])}>Scissors</button>
+            </> : <>
+                <p>Result: {humanScore === computerScore? 'Draw' : humanScore > computerScore? 'You won!' : 'You lost!'}</p>
+                <button type='button' className='btn btn-primary' onClick={playAgain}>Play again?</button>
+            </>}
         </div>
     );
 }
