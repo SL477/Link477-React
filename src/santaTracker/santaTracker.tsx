@@ -17,8 +17,8 @@ import { GeodesicLine } from 'leaflet.geodesic';
 export default function SantaTracker() {
   const [santaData, setSantaData] = useState<santaDestinations>();
   const [currentYear, setCurrentYear] = useState<number>();
-  //   const [currentDate] = useState(new Date(Date.now()));
-  const [currentDate] = useState(new Date('2024-12-25T02:34:30.115Z'));
+  const [currentDate, setCurrentDate] = useState(new Date(Date.now()));
+  //   const [currentDate] = useState(new Date('2024-12-25T02:34:30.115Z'));
   const [santaLocation, setSantaLocation] = useState<number[]>();
   const [santaPath, setSantaPath] = useState<LatLng[]>();
   const [map, setMap] = useState();
@@ -34,6 +34,8 @@ export default function SantaTracker() {
       });
     const curDate = new Date(Date.now());
     setCurrentYear(curDate.getFullYear());
+    // Update every 30 seconds
+    setInterval(() => setCurrentDate(new Date(Date.now())), 30000);
   }, []);
 
   const getItemDate = (itemDate: number) => {
@@ -54,29 +56,39 @@ export default function SantaTracker() {
 
   useEffect(() => {
     if (santaData) {
-      const santaArrival = santaData.destinations
-        .filter((d) => getItemDate(d.arrival).getTime() < currentDate.getTime())
-        .reduce((a, b) => {
+      const santaArrivalFiltered = santaData.destinations.filter(
+        (d) => getItemDate(d.arrival).getTime() < currentDate.getTime()
+      );
+
+      const santaDepartureFiltered = santaData.destinations.filter(
+        (d) => getItemDate(d.departure).getTime() > currentDate.getTime()
+      );
+      if (
+        santaArrivalFiltered.length > 0 &&
+        santaDepartureFiltered.length > 0
+      ) {
+        const santaArrival = santaArrivalFiltered.reduce((a, b) => {
           return new Date(a.arrival).getTime() > new Date(b.arrival).getTime()
             ? a
             : b;
         });
-      const santaDeparture = santaData.destinations
-        .filter(
-          (d) => getItemDate(d.departure).getTime() > currentDate.getTime()
-        )
-        .reduce((a, b) => {
+
+        const santaDeparture = santaDepartureFiltered.reduce((a, b) => {
           return new Date(a.arrival).getTime() < new Date(b.arrival).getTime()
             ? a
             : b;
         });
 
-      setSantaLocation(
-        Midpoint(
-          Turf.point([santaArrival.location.lat, santaArrival.location.lng]),
-          Turf.point([santaDeparture.location.lat, santaDeparture.location.lng])
-        ).geometry.coordinates
-      );
+        setSantaLocation(
+          Midpoint(
+            Turf.point([santaArrival.location.lat, santaArrival.location.lng]),
+            Turf.point([
+              santaDeparture.location.lat,
+              santaDeparture.location.lng,
+            ])
+          ).geometry.coordinates
+        );
+      }
 
       // Get Santa's path
       setSantaPath(
@@ -88,7 +100,7 @@ export default function SantaTracker() {
   }, [santaData]);
 
   useEffect(() => {
-    if (map && santaPath) {
+    if (map && santaPath && santaPath?.length > 0) {
       new GeodesicLine(santaPath, {
         weight: 2,
         color: 'red',
