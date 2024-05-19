@@ -8,6 +8,7 @@ import { santaDestinations } from './santaDestinations';
 
 export default function SantaTracker() {
   const [santaData, setSantaData] = useState<santaDestinations>();
+  const [currentYear, setCurrentYear] = useState<number>();
 
   useEffect(() => {
     fetch(
@@ -18,7 +19,17 @@ export default function SantaTracker() {
         setSantaData(data);
         console.log(data);
       });
+    const curDate = new Date(Date.now());
+    setCurrentYear(curDate.getFullYear());
   }, []);
+
+  const getItemDate = (itemDate: number) => {
+    const tmpDate = new Date(itemDate);
+    if (currentYear) {
+      tmpDate.setFullYear(currentYear);
+    }
+    return tmpDate;
+  };
 
   return (
     <div className="leaflet-container">
@@ -37,12 +48,12 @@ export default function SantaTracker() {
               {item.city}, {item.region}
               <br />
               <strong>Arrival: </strong>
-              {new Date(item.arrival).toLocaleDateString()} @{' '}
-              {new Date(item.arrival).toLocaleTimeString()}
+              {getItemDate(item.arrival).toLocaleDateString()} @{' '}
+              {getItemDate(item.arrival).toLocaleTimeString()}
               <br />
               <strong>Departure: </strong>{' '}
-              {new Date(item.arrival).toLocaleDateString()} @{' '}
-              {new Date(item.departure).toLocaleTimeString()}
+              {getItemDate(item.arrival).toLocaleDateString()} @{' '}
+              {getItemDate(item.departure).toLocaleTimeString()}
             </Popup>
           </Marker>
         ))}
