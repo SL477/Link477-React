@@ -1,10 +1,13 @@
+// Very vaguely from https://www.freecodecamp.org/news/how-to-build-a-santa-tracker-app-with-next-js-react-leaflet/
+
 import { useState, useEffect } from 'react';
 import 'leaflet/dist/leaflet.css';
-// import Leaflet from 'leaflet/dist/leaflet.js';
+import Leaflet from 'leaflet/dist/leaflet.js';
 import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
 // import santaCss from './santaTracker.module.css';
 import './santaTracker.css';
 import { santaDestinations } from './santaDestinations';
+import xmasTree from './tree-marker-icon.png';
 
 export default function SantaTracker() {
   const [santaData, setSantaData] = useState<santaDestinations>();
@@ -42,6 +45,11 @@ export default function SantaTracker() {
           <Marker
             key={item.id}
             position={[item.location.lat, item.location.lng]}
+            icon={Leaflet.icon({
+              iconUrl: xmasTree,
+              iconRetinaUrl: xmasTree,
+              iconSize: [41, 41],
+            })}
           >
             <Popup>
               <strong>Location: </strong>
