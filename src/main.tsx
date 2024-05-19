@@ -10,41 +10,46 @@ import Battleship from './battleship/battleship';
 import GameOfLife from './gameOfLife/GameOfLife';
 import RockPaperScissors from './rockPaperScissors';
 import TicTacToe from './ticTacToe/tictactoe';
+import SantaTracker from './santaTracker/santaTracker';
 import Home from './home';
 
 const router = createHashRouter([
   {
     path: '/',
-    element: <Home/>
+    element: <Home />,
   },
   {
     path: '/arrays',
-    element: <StudentGrades/>
+    element: <StudentGrades />,
   },
   {
     path: '/weather',
-    element: <Weather/>
+    element: <Weather />,
   },
   {
     path: '/battleship',
-    element: <Battleship/>
+    element: <Battleship />,
   },
   {
     path: '/gameoflife',
-    element: <GameOfLife/>
+    element: <GameOfLife />,
   },
   {
     path: '/rockPaperScissors',
-    element: <RockPaperScissors/>
+    element: <RockPaperScissors />,
   },
   {
     path: '/tictactoe',
-    element: <TicTacToe/>
-  }
+    element: <TicTacToe />,
+  },
+  {
+    path: '/santaTracker',
+    element: <SantaTracker />,
+  },
 ]);
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
     <RouterProvider router={router} />
-  </React.StrictMode>,
+  </React.StrictMode>
 );
