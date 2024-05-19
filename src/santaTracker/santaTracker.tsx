@@ -8,10 +8,14 @@ import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
 import './santaTracker.css';
 import { santaDestinations } from './santaDestinations';
 import xmasTree from './tree-marker-icon.png';
+import present from './gift-marker-icon-2x.png';
+import santa from './santa-marker-icon-2x.png';
 
 export default function SantaTracker() {
   const [santaData, setSantaData] = useState<santaDestinations>();
   const [currentYear, setCurrentYear] = useState<number>();
+  //   const [currentDate] = useState(new Date(Date.now()));
+  const [currentDate] = useState(new Date('2024-12-25T03:34:00.115Z'));
 
   useEffect(() => {
     fetch(
@@ -34,6 +38,20 @@ export default function SantaTracker() {
     return tmpDate;
   };
 
+  const getIcon = (arrivalDate: Date, departureDate: Date) => {
+    const santaWasHere = currentDate.getTime() - departureDate.getTime() > 0;
+    // const santaIsHere =
+    //   currentDate.getTime() - arrivalDate.getTime() > 0 && !santaWasHere;
+
+    // if (santaIsHere) {
+    //   return santa;
+    // }
+    if (santaWasHere) {
+      return present;
+    }
+    return xmasTree;
+  };
+
   return (
     <div className="leaflet-container">
       <MapContainer center={[0, 0]} zoom={1} scrollWheelZoom={false}>
@@ -46,9 +64,22 @@ export default function SantaTracker() {
             key={item.id}
             position={[item.location.lat, item.location.lng]}
             icon={Leaflet.icon({
-              iconUrl: xmasTree,
-              iconRetinaUrl: xmasTree,
+              iconUrl: getIcon(
+                getItemDate(item.arrival),
+                getItemDate(item.departure)
+              ),
+              iconRetinaUrl: getIcon(
+                getItemDate(item.arrival),
+                getItemDate(item.departure)
+              ),
               iconSize: [41, 41],
+              //   className:
+              //     getIcon(
+              //       getItemDate(item.arrival),
+              //       getItemDate(item.departure)
+              //     ) === santa
+              //       ? 'iconSantaIsHere'
+              //       : '',
             })}
           >
             <Popup>

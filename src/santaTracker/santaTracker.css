@@ -2,3 +2,7 @@
   height: 400px;
   width: 800px;
 }
+
+.iconSantaIsHere {
+  z-index: 9999 !important;
+}
