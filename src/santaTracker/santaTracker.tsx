@@ -27,10 +27,22 @@ export default function SantaTracker() {
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         />
-        {santaData?.destinations?.map(({ id, location, city, region }) => (
-          <Marker key={id} position={[location.lat, location.lng]}>
+        {santaData?.destinations?.map((item) => (
+          <Marker
+            key={item.id}
+            position={[item.location.lat, item.location.lng]}
+          >
             <Popup>
-              {city}, {region}
+              <strong>Location: </strong>
+              {item.city}, {item.region}
+              <br />
+              <strong>Arrival: </strong>
+              {new Date(item.arrival).toLocaleDateString()} @{' '}
+              {new Date(item.arrival).toLocaleTimeString()}
+              <br />
+              <strong>Departure: </strong>{' '}
+              {new Date(item.arrival).toLocaleDateString()} @{' '}
+              {new Date(item.departure).toLocaleTimeString()}
             </Popup>
           </Marker>
         ))}
