@@ -10,12 +10,15 @@ import { santaDestinations } from './santaDestinations';
 import xmasTree from './tree-marker-icon.png';
 import present from './gift-marker-icon-2x.png';
 import santa from './santa-marker-icon-2x.png';
+import Midpoint from '@turf/midpoint';
+import * as Turf from '@turf/turf';
 
 export default function SantaTracker() {
   const [santaData, setSantaData] = useState<santaDestinations>();
   const [currentYear, setCurrentYear] = useState<number>();
   //   const [currentDate] = useState(new Date(Date.now()));
-  const [currentDate] = useState(new Date('2024-12-25T03:34:00.115Z'));
+  const [currentDate] = useState(new Date('2024-12-25T02:34:30.115Z'));
+  const [santaLocation, setSantaLocation] = useState<number[]>();
 
   useEffect(() => {
     fetch(
@@ -51,6 +54,34 @@ export default function SantaTracker() {
     }
     return xmasTree;
   };
+
+  useEffect(() => {
+    if (santaData) {
+      const santaArrival = santaData.destinations
+        .filter((d) => getItemDate(d.arrival).getTime() < currentDate.getTime())
+        .reduce((a, b) => {
+          return new Date(a.arrival).getTime() > new Date(b.arrival).getTime()
+            ? a
+            : b;
+        });
+      const santaDeparture = santaData.destinations
+        .filter(
+          (d) => getItemDate(d.departure).getTime() > currentDate.getTime()
+        )
+        .reduce((a, b) => {
+          return new Date(a.arrival).getTime() < new Date(b.arrival).getTime()
+            ? a
+            : b;
+        });
+      //.sort((a, b) => (new Date(a.arrival)).getTime() - (new Date(b.arrival)).getTime());
+      setSantaLocation(
+        Midpoint(
+          Turf.point([santaArrival.location.lat, santaArrival.location.lng]),
+          Turf.point([santaDeparture.location.lat, santaDeparture.location.lng])
+        ).geometry.coordinates
+      );
+    }
+  }, [santaData]);
 
   return (
     <div className="leaflet-container">
@@ -96,6 +127,19 @@ export default function SantaTracker() {
             </Popup>
           </Marker>
         ))}
+        {santaLocation && santaLocation[0] && santaLocation[1] ? (
+          <Marker
+            position={[santaLocation[0], santaLocation[1]]}
+            icon={Leaflet.icon({
+              iconUrl: santa,
+              iconRetinaUrl: santa,
+              iconSize: [41, 41],
+              className: 'iconSantaIsHere',
+            })}
+          ></Marker>
+        ) : (
+          ''
+        )}
       </MapContainer>
     </div>
   );
