@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import 'leaflet/dist/leaflet.css';
-import Leaflet from 'leaflet/dist/leaflet.js';
+// import Leaflet from 'leaflet/dist/leaflet.js';
 import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
 import './santaTracker.css';
 import { santaDestinations } from './santaDestinations';
@@ -10,18 +10,20 @@ import xmasTree from './tree-marker-icon.png';
 import present from './gift-marker-icon-2x.png';
 import santa from './santa-marker-icon-2x.png';
 import Midpoint from '@turf/midpoint';
-import * as Turf from '@turf/turf';
-import { LatLng } from 'leaflet';
+import { point as TurfPoint } from '@turf/turf';
+import { LatLng, icon as LIcon, Map as LMap } from 'leaflet';
 import { GeodesicLine } from 'leaflet.geodesic';
 
 export default function SantaTracker() {
   const [santaData, setSantaData] = useState<santaDestinations>();
   const [currentYear, setCurrentYear] = useState<number>();
   const [currentDate, setCurrentDate] = useState(new Date(Date.now()));
-  //   const [currentDate] = useState(new Date('2024-12-25T02:34:30.115Z'));
+  // const [currentDate, setCurrentDate] = useState(
+  //   new Date('2024-12-25T02:34:30.115Z')
+  // );
   const [santaLocation, setSantaLocation] = useState<number[]>();
   const [santaPath, setSantaPath] = useState<LatLng[]>();
-  const [map, setMap] = useState();
+  const [map, setMap] = useState<LMap | null>();
 
   useEffect(() => {
     fetch(
@@ -81,8 +83,8 @@ export default function SantaTracker() {
 
         setSantaLocation(
           Midpoint(
-            Turf.point([santaArrival.location.lat, santaArrival.location.lng]),
-            Turf.point([
+            TurfPoint([santaArrival.location.lat, santaArrival.location.lng]),
+            TurfPoint([
               santaDeparture.location.lat,
               santaDeparture.location.lng,
             ])
@@ -114,7 +116,7 @@ export default function SantaTracker() {
         center={[0, 0]}
         zoom={1}
         scrollWheelZoom={false}
-        ref={setMap}
+        ref={(a) => setMap(a)}
       >
         <TileLayer
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
@@ -125,7 +127,7 @@ export default function SantaTracker() {
           <Marker
             key={item.id}
             position={[item.location.lat, item.location.lng]}
-            icon={Leaflet.icon({
+            icon={LIcon({
               iconUrl: getIcon(getItemDate(item.departure)),
               iconRetinaUrl: getIcon(getItemDate(item.departure)),
               iconSize: [41, 41],
@@ -148,7 +150,7 @@ export default function SantaTracker() {
         {santaLocation && santaLocation[0] && santaLocation[1] ? (
           <Marker
             position={[santaLocation[0], santaLocation[1]]}
-            icon={Leaflet.icon({
+            icon={LIcon({
               iconUrl: santa,
               iconRetinaUrl: santa,
               iconSize: [41, 41],
