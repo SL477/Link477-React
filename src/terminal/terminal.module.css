@@ -1,0 +1,39 @@
+.banner {
+  color: blue;
+  text-align: center;
+}
+
+.terminalBox {
+  color: gold;
+  height: calc(100vh - 76px);
+  min-height: 100%;
+  background-color: black;
+}
+
+.terminal {
+  background-color: transparent;
+  color: white;
+  border: none;
+  width: 80%;
+  height: 200px;
+}
+
+.terminalLabel {
+  /* width: 100%; */
+  /* border: 2px solid red; */
+  color: green;
+}
+
+.greyText {
+  color: grey;
+}
+
+.blueText {
+  color: blue;
+}
+
+@media screen and (max-height: 402px) {
+  .terminalBox {
+    height: 100%;
+  }
+}
