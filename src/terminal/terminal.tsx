@@ -1,5 +1,6 @@
 import styles from './terminal.module.css';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { JokeInterface } from './jokeInterface';
 
 export const banner = `
 .____    .__        __        _______________________ 
@@ -15,6 +16,8 @@ export default function Terminal() {
   const [terminalHistory, setTerminalHistory] = useState<string[]>([]);
   const [terminalOutput, setTerminalOutput] = useState<string[][]>([]);
   const [terminalPath, setTerminalPath] = useState('~');
+  const [getJoke, setGetJoke] = useState(false);
+  const [jokeText, setJokeText] = useState('');
 
   const commands: { [index: string]: string } = {
     cd: 'Change Directory',
@@ -22,6 +25,7 @@ export default function Terminal() {
     credits: 'Show the credits',
     echo: 'Display the given text',
     help: 'Shows the commands',
+    joke: 'Gets a joke from the Joke API',
     ls: 'List the directory structure',
   };
 
@@ -48,7 +52,9 @@ Libraries used:
 * React
 * Vite
 
-https://patorjk.com/software/taag/ I used to create the ASCII art.`;
+https://patorjk.com/software/taag/ I used to create the ASCII art.
+
+Joke API - https://jokeapi.dev/, for getting the jokes`;
 
   const clearTerminal = () => {
     const terminalSpan = document.getElementById('terminal');
@@ -182,6 +188,8 @@ https://patorjk.com/software/taag/ I used to create the ASCII art.`;
           styles.greyText,
         ]);
         setTerminalOutput(newTerminalOutput);
+      } else if (terminalText.toLowerCase() === 'joke') {
+        setGetJoke(true);
       } else {
         const newTerminalOutput = [...terminalOutput];
         newTerminalOutput.push([
@@ -204,13 +212,61 @@ https://patorjk.com/software/taag/ I used to create the ASCII art.`;
     }
   };
 
+  useEffect(() => {
+    if (getJoke) {
+      fetch(
+        'https://v2.jokeapi.dev/joke/Programming?blacklistFlags=nsfw,religious,racist,sexist,explicit'
+      )
+        .then((data) => data.json())
+        .then((data: JokeInterface) => {
+          let theJoke = '';
+          if (data.type === 'single') {
+            theJoke = data.joke;
+          } else if (data.type === 'twopart') {
+            theJoke = `${data.setup}
+${data.delivery}`;
+          } else {
+            theJoke = 'Sorry, no joke';
+          }
+
+          let i = 1;
+          const jokeIntervalId = setInterval(() => {
+            setJokeText(theJoke.slice(0, i));
+            i++;
+            if (i >= theJoke.length) {
+              clearInterval(jokeIntervalId);
+              setGetJoke(false);
+              const newTerminalOutput = [...terminalOutput];
+              newTerminalOutput.push(['joke', theJoke, terminalPath]);
+              setTerminalOutput(newTerminalOutput);
+              setJokeText('');
+            }
+          }, 50);
+        })
+        .catch((ex) => {
+          console.error(ex);
+          setGetJoke(false);
+          const newTerminalOutput = [...terminalOutput];
+          newTerminalOutput.push(['joke', 'Sorry no joke', terminalPath]);
+          setTerminalOutput(newTerminalOutput);
+        });
+    }
+  }, [getJoke]);
+
+  useEffect(() => {
+    const terminalSpan = document.getElementById('terminal');
+    if (terminalSpan) {
+      terminalSpan.focus();
+    }
+  }, []);
+
   return (
     <div className={styles.terminalBox}>
       <pre className={styles.banner}>{banner}</pre>
       <p>Welcome to my Terminal Portfolio</p>
-      {terminalOutput.map((priorCmd) => {
+      {terminalOutput.map((priorCmd, j) => {
         return (
-          <>
+          <div key={j}>
             <span className={styles.terminalLabel}>
               guest@link477.com<span className={styles.greyText}>:</span>
               <span className={styles.blueText}>{priorCmd[2]}</span>
@@ -221,7 +277,7 @@ https://patorjk.com/software/taag/ I used to create the ASCII art.`;
             <pre className={priorCmd.length >= 4 ? priorCmd[3] : ''}>
               {priorCmd[1]}
             </pre>
-          </>
+          </div>
         );
       })}
       <span className={styles.terminalLabel}>
@@ -229,19 +285,30 @@ https://patorjk.com/software/taag/ I used to create the ASCII art.`;
         <span className={styles.blueText}>{terminalPath}</span>
         <span className={styles.greyText}>$</span>&nbsp;
       </span>
-      <span
-        id="terminal"
-        className={styles.terminal}
-        contentEditable
-        onInput={(e) => setTerminalText(e.currentTarget.textContent)}
-        onKeyDown={(e) => {
-          if (e.key == 'Enter') {
-            runCommands();
-            e.preventDefault();
-          }
-        }}
-        tabIndex={1}
-      ></span>
+      {getJoke ? (
+        <>
+          <span className={styles.terminal}>Joke</span>
+          <pre className={styles.outputText}>{jokeText}</pre>
+        </>
+      ) : (
+        <span
+          role="textbox"
+          aria-label="Console text input"
+          id="terminal"
+          key="terminal"
+          className={styles.terminal}
+          contentEditable
+          onInput={(e) => setTerminalText(e.currentTarget.textContent)}
+          onKeyDown={(e) => {
+            if (e.key == 'Enter') {
+              runCommands();
+              e.preventDefault();
+            }
+          }}
+          tabIndex={0}
+          autoFocus={true}
+        ></span>
+      )}
     </div>
   );
 }

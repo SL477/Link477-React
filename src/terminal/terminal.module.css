@@ -17,6 +17,7 @@
   border: none;
   width: 80%;
   height: 200px;
+  text-wrap: wrap;
 }
 
 .terminalLabel {
@@ -35,6 +36,10 @@
 
 .redText {
   color: red;
+}
+
+.outputText {
+  text-wrap: wrap;
 }
 
 /* @media screen and (max-height: 402px) {
