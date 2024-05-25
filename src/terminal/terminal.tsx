@@ -164,10 +164,11 @@ Joke API - https://jokeapi.dev/, for getting the jokes`;
         }
       } else if (
         terminalText.toLowerCase() === 'echo' ||
-        terminalText.toLowerCase().startsWith('echo ')
+        terminalText.toLowerCase().startsWith('echo ') ||
+        terminalText.toLowerCase().startsWith('echo ')
       ) {
         let echoText = '';
-        if (terminalText.toLowerCase().startsWith('echo ')) {
+        if (terminalText.toLowerCase().startsWith('echo')) {
           echoText = terminalText.substring(5);
         }
 
