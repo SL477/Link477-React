@@ -18,6 +18,9 @@ export default function Terminal() {
   const [terminalPath, setTerminalPath] = useState('~');
   const [getJoke, setGetJoke] = useState(false);
   const [jokeText, setJokeText] = useState('');
+  const [historyIndex, setHistoryIndex] = useState(0);
+  const [getHistory, setGetHistory] = useState(false);
+  const [terminalSpan, setTerminalSpanRef] = useState<HTMLSpanElement | null>();
 
   const commands: { [index: string]: string } = {
     cd: 'Change Directory',
@@ -57,7 +60,6 @@ https://patorjk.com/software/taag/ I used to create the ASCII art.
 Joke API - https://jokeapi.dev/, for getting the jokes`;
 
   const clearTerminal = () => {
-    const terminalSpan = document.getElementById('terminal');
     if (terminalSpan) {
       terminalSpan.textContent = '';
     }
@@ -252,14 +254,23 @@ ${data.delivery}`;
           setTerminalOutput(newTerminalOutput);
         });
     }
-  }, [getJoke]);
+  }, [getJoke, terminalOutput, terminalPath]);
 
   useEffect(() => {
-    const terminalSpan = document.getElementById('terminal');
     if (terminalSpan) {
       terminalSpan.focus();
     }
-  }, []);
+  }, [terminalSpan]);
+
+  useEffect(() => {
+    if (getHistory) {
+      if (terminalSpan) {
+        terminalSpan.textContent = terminalHistory[historyIndex];
+        setTerminalText(terminalHistory[historyIndex]);
+        setGetHistory(false);
+      }
+    }
+  }, [historyIndex, terminalHistory, getHistory, terminalSpan]);
 
   return (
     <div className={styles.terminalBox}>
@@ -304,10 +315,27 @@ ${data.delivery}`;
             if (e.key == 'Enter') {
               runCommands();
               e.preventDefault();
+            } else if (e.key == 'ArrowUp') {
+              let newHistIndex = historyIndex - 1;
+              if (newHistIndex < 0) {
+                newHistIndex = terminalHistory.length - 1;
+              }
+              setHistoryIndex(newHistIndex);
+              setGetHistory(true);
+              e.preventDefault();
+            } else if (e.key == 'ArrowDown') {
+              let newHistIndex = historyIndex + 1;
+              if (newHistIndex >= terminalHistory.length) {
+                newHistIndex = 0;
+              }
+              setHistoryIndex(newHistIndex);
+              setGetHistory(true);
+              e.preventDefault();
             }
           }}
           tabIndex={0}
           autoFocus={true}
+          ref={(e) => setTerminalSpanRef(e)}
         ></span>
       )}
     </div>
