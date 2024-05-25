@@ -68,9 +68,10 @@ Joke API - https://jokeapi.dev/, for getting the jokes`;
 
   const runCommands = () => {
     if (terminalText) {
-      if (terminalText.toLowerCase() === 'clear') {
+      const commandBeingRun = getCommandBeingRun();
+      if (commandBeingRun === 'clear') {
         setTerminalOutput([]);
-      } else if (terminalText.toLowerCase() === 'help') {
+      } else if (commandBeingRun === 'help') {
         const newTerminalOutput = [...terminalOutput];
         let helpOutput = '';
         for (const key in commands) {
@@ -78,10 +79,7 @@ Joke API - https://jokeapi.dev/, for getting the jokes`;
         }
         newTerminalOutput.push([terminalText, helpOutput, terminalPath]);
         setTerminalOutput(newTerminalOutput);
-      } else if (
-        terminalText.toLowerCase().startsWith('ls ') ||
-        terminalText.toLowerCase() === 'ls'
-      ) {
+      } else if (commandBeingRun === 'ls') {
         const splitTerminalText = terminalText.toLowerCase().split(' ');
         let requestedDirectory = terminalPath;
         if (splitTerminalText.length > 1) {
@@ -121,10 +119,7 @@ Joke API - https://jokeapi.dev/, for getting the jokes`;
           newTerminalOutput.push([terminalText, lsOutput, terminalPath]);
         }
         setTerminalOutput(newTerminalOutput);
-      } else if (
-        terminalText.toLowerCase() === 'cd' ||
-        terminalText.toLowerCase().startsWith('cd ')
-      ) {
+      } else if (commandBeingRun === 'cd') {
         const splitTerminalText = terminalText.toLowerCase().split(' ');
         if (splitTerminalText.length > 1) {
           // Changing
@@ -164,11 +159,7 @@ Joke API - https://jokeapi.dev/, for getting the jokes`;
           newTerminalOutput.push([terminalText, '', terminalPath]);
           setTerminalOutput(newTerminalOutput);
         }
-      } else if (
-        terminalText.toLowerCase() === 'echo' ||
-        terminalText.toLowerCase().startsWith('echo ') ||
-        terminalText.toLowerCase().startsWith('echo ')
-      ) {
+      } else if (commandBeingRun === 'echo') {
         let echoText = '';
         if (terminalText.toLowerCase().startsWith('echo')) {
           echoText = terminalText.substring(5);
@@ -182,7 +173,7 @@ Joke API - https://jokeapi.dev/, for getting the jokes`;
           styles.greyText,
         ]);
         setTerminalOutput(newTerminalOutput);
-      } else if (terminalText.toLowerCase() === 'credits') {
+      } else if (commandBeingRun === 'credits') {
         const newTerminalOutput = [...terminalOutput];
         newTerminalOutput.push([
           terminalText,
@@ -191,7 +182,7 @@ Joke API - https://jokeapi.dev/, for getting the jokes`;
           styles.greyText,
         ]);
         setTerminalOutput(newTerminalOutput);
-      } else if (terminalText.toLowerCase() === 'joke') {
+      } else if (commandBeingRun === 'joke') {
         setGetJoke(true);
       } else {
         const newTerminalOutput = [...terminalOutput];
@@ -212,6 +203,85 @@ Joke API - https://jokeapi.dev/, for getting the jokes`;
       const newTerminalOutput = [...terminalOutput];
       newTerminalOutput.push(['', '', terminalPath]);
       setTerminalOutput(newTerminalOutput);
+    }
+  };
+
+  const selectLastElementOfTerminalText = () => {
+    if (terminalSpan) {
+      const range = document.createRange();
+      range.setStart(terminalSpan, 1);
+      range.collapse(true);
+
+      const sel = window.getSelection();
+      sel?.removeAllRanges();
+      sel?.addRange(range);
+    }
+  };
+
+  const getCommandBeingRun = () => {
+    if (terminalText) {
+      // eslint-disable-next-line no-irregular-whitespace
+      const newTerminalText = terminalText.replace(/ /g, ' ');
+      const newTerminalTextSplit = newTerminalText.split(' ');
+      if (newTerminalTextSplit.length > 0) {
+        const newCommand = newTerminalTextSplit[0].toLowerCase();
+        if (newCommand in commands) {
+          return newCommand;
+        }
+      }
+    }
+    return '';
+  };
+
+  const autoComplete = () => {
+    if (terminalSpan) {
+      if (terminalText?.includes(' ') || terminalText?.includes(' ')) {
+        // there is a space
+        const commandBeingRun = getCommandBeingRun();
+        if (commandBeingRun === 'ls' || commandBeingRun === 'cd') {
+          // eslint-disable-next-line no-irregular-whitespace
+          const newTerminalText = terminalText.replace(/ /g, ' ');
+          const newTerminalTextSplit = newTerminalText.split(' ');
+          if (newTerminalTextSplit.length === 2) {
+            const requestedDirectory = newTerminalTextSplit[1];
+            const paths = [];
+            for (const key in fileDirectory) {
+              paths.push(key);
+            }
+            const match = paths.filter((e) =>
+              new RegExp(
+                `^${requestedDirectory.replace('~/', '')}.*`,
+                'ig'
+              ).test(e)
+            );
+            if (match.length > 0) {
+              if (
+                terminalPath === '~' ||
+                (terminalPath !== '~' && requestedDirectory.startsWith('~/'))
+              ) {
+                const newCmd = `${commandBeingRun} ${requestedDirectory.startsWith('~/') ? '~/' : ''}${match[0]}`;
+                setTerminalText(newCmd);
+                terminalSpan.textContent = newCmd;
+                selectLastElementOfTerminalText();
+              }
+            }
+          }
+        }
+      } else {
+        const words = [];
+        for (const key in commands) {
+          words.push(key);
+        }
+        const match = words.filter((e) =>
+          new RegExp(`^${terminalText}.*`, 'ig').test(e)
+        );
+        if (match.length > 0) {
+          setTerminalText(match[0]);
+          terminalSpan.textContent = match[0];
+          selectLastElementOfTerminalText();
+        }
+      }
+      terminalSpan.focus();
     }
   };
 
@@ -330,6 +400,9 @@ ${data.delivery}`;
               }
               setHistoryIndex(newHistIndex);
               setGetHistory(true);
+              e.preventDefault();
+            } else if (e.key === 'Tab') {
+              autoComplete();
               e.preventDefault();
             }
           }}
