@@ -19,6 +19,8 @@ export default function Terminal() {
   const commands: { [index: string]: string } = {
     cd: 'Change Directory',
     clear: 'Wipes the input',
+    credits: 'Show the credits',
+    echo: 'Display the given text',
     help: 'Shows the commands',
     ls: 'List the directory structure',
   };
@@ -39,6 +41,14 @@ tools
 * Docker
 * Git`,
   };
+
+  const credits = `Inspired by https://www.freecodecamp.org/news/how-to-create-interactive-terminal-based-portfolio/, but I decided to make the terminal from scratch!
+  
+Libraries used:
+* React
+* Vite
+
+https://patorjk.com/software/taag/ I used to create the ASCII art.`;
 
   const clearTerminal = () => {
     const terminalSpan = document.getElementById('terminal');
@@ -146,6 +156,32 @@ tools
           newTerminalOutput.push([terminalText, '', terminalPath]);
           setTerminalOutput(newTerminalOutput);
         }
+      } else if (
+        terminalText.toLowerCase() === 'echo' ||
+        terminalText.toLowerCase().startsWith('echo ')
+      ) {
+        let echoText = '';
+        if (terminalText.toLowerCase().startsWith('echo ')) {
+          echoText = terminalText.substring(5);
+        }
+
+        const newTerminalOutput = [...terminalOutput];
+        newTerminalOutput.push([
+          terminalText,
+          echoText,
+          terminalPath,
+          styles.greyText,
+        ]);
+        setTerminalOutput(newTerminalOutput);
+      } else if (terminalText.toLowerCase() === 'credits') {
+        const newTerminalOutput = [...terminalOutput];
+        newTerminalOutput.push([
+          terminalText,
+          credits,
+          terminalPath,
+          styles.greyText,
+        ]);
+        setTerminalOutput(newTerminalOutput);
       } else {
         const newTerminalOutput = [...terminalOutput];
         newTerminalOutput.push([
