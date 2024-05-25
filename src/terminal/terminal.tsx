@@ -347,6 +347,10 @@ ${data.delivery}`;
       <pre className={styles.banner}>{banner}</pre>
       <p>Welcome to my Terminal Portfolio</p>
       {terminalOutput.map((priorCmd, j) => {
+        // eslint-disable-next-line no-irregular-whitespace
+        const splitCmd = priorCmd[0].replace(/ /g, ' ').split(' ');
+        const firstCmd = splitCmd[0];
+        const remainingCmd = priorCmd[0].replace(firstCmd, '');
         return (
           <div key={j}>
             <span className={styles.terminalLabel}>
@@ -354,8 +358,16 @@ ${data.delivery}`;
               <span className={styles.blueText}>{priorCmd[2]}</span>
               <span className={styles.greyText}>$</span>&nbsp;
             </span>
-            <span>{priorCmd[0]}</span>
-
+            <span
+              className={
+                firstCmd.toLowerCase() in commands
+                  ? styles.whiteText
+                  : styles.greyText
+              }
+            >
+              {firstCmd}
+            </span>
+            <span className={styles.greyText}>{remainingCmd}</span>
             <pre className={priorCmd.length >= 4 ? priorCmd[3] : ''}>
               {priorCmd[1]}
             </pre>

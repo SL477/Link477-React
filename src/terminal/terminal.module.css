@@ -38,3 +38,7 @@
 .outputText {
   text-wrap: wrap;
 }
+
+.whiteText {
+  color: white;
+}
