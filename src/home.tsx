@@ -7,6 +7,7 @@ export default function Home() {
     ['/gameoflife', 'Game Of Life'],
     ['/rockPaperScissors', 'Rock Paper Scissors'],
     ['/santaTracker', 'Santa Tracker'],
+    ['terminal', 'Terminal'],
     ['/tictactoe', 'Tic Tac Toe'],
     ['/weather', 'Weather'],
   ];

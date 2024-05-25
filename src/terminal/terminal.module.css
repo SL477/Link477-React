@@ -1,0 +1,44 @@
+.banner {
+  color: blue;
+  text-align: center;
+}
+
+.terminalBox {
+  color: gold;
+  min-height: 100vh;
+  background-color: black;
+}
+
+.terminal {
+  background-color: transparent;
+  color: white;
+  border: none;
+  width: 80%;
+  height: 200px;
+  text-wrap: wrap;
+  caret-color: green;
+}
+
+.terminalLabel {
+  color: green;
+}
+
+.greyText {
+  color: grey;
+}
+
+.blueText {
+  color: blue;
+}
+
+.redText {
+  color: red;
+}
+
+.outputText {
+  text-wrap: wrap;
+}
+
+.whiteText {
+  color: white;
+}

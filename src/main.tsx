@@ -12,6 +12,7 @@ import RockPaperScissors from './rockPaperScissors';
 import TicTacToe from './ticTacToe/tictactoe';
 import SantaTracker from './santaTracker/santaTracker';
 import Home from './home';
+import Terminal from './terminal/terminal';
 
 const router = createHashRouter([
   {
@@ -45,6 +46,10 @@ const router = createHashRouter([
   {
     path: '/santaTracker',
     element: <SantaTracker />,
+  },
+  {
+    path: 'terminal',
+    element: <Terminal />,
   },
 ]);
 
