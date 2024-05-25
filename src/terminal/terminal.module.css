@@ -5,8 +5,6 @@
 
 .terminalBox {
   color: gold;
-  /* height: calc(100vh - 76px);
-  min-height: 100%; */
   min-height: 100vh;
   background-color: black;
 }
@@ -18,11 +16,10 @@
   width: 80%;
   height: 200px;
   text-wrap: wrap;
+  caret-color: green;
 }
 
 .terminalLabel {
-  /* width: 100%; */
-  /* border: 2px solid red; */
   color: green;
 }
 
@@ -41,9 +38,3 @@
 .outputText {
   text-wrap: wrap;
 }
-
-/* @media screen and (max-height: 402px) {
-  .terminalBox {
-    height: 100%;
-  }
-} */
