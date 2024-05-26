@@ -1,6 +1,7 @@
 import styles from './terminal.module.css';
 import { useState, useEffect } from 'react';
 import { JokeInterface } from './jokeInterface';
+import TerminalPath from './terminalPath';
 
 export const banner = `
 .____    .__        __        _______________________ 
@@ -80,7 +81,11 @@ Joke API - https://jokeapi.dev/, for getting the jokes`;
         newTerminalOutput.push([terminalText, helpOutput, terminalPath]);
         setTerminalOutput(newTerminalOutput);
       } else if (commandBeingRun === 'ls') {
-        const splitTerminalText = terminalText.toLowerCase().split(' ');
+        const splitTerminalText = terminalText
+          .toLowerCase()
+          // eslint-disable-next-line no-irregular-whitespace
+          .replace(/ /g, ' ')
+          .split(' ');
         let requestedDirectory = terminalPath;
         if (splitTerminalText.length > 1) {
           requestedDirectory = splitTerminalText[1];
@@ -88,7 +93,10 @@ Joke API - https://jokeapi.dev/, for getting the jokes`;
 
         let lsOutput = '';
         let isError = false;
-        if (['~', '..'].includes(requestedDirectory)) {
+        if (
+          ['~', '~/'].includes(requestedDirectory) ||
+          (requestedDirectory === '..' && terminalPath !== '~')
+        ) {
           for (const key in fileDirectory) {
             lsOutput += `${key}\n`;
           }
@@ -120,7 +128,11 @@ Joke API - https://jokeapi.dev/, for getting the jokes`;
         }
         setTerminalOutput(newTerminalOutput);
       } else if (commandBeingRun === 'cd') {
-        const splitTerminalText = terminalText.toLowerCase().split(' ');
+        const splitTerminalText = terminalText
+          .toLowerCase()
+          // eslint-disable-next-line no-irregular-whitespace
+          .replace(/ /g, ' ')
+          .split(' ');
         if (splitTerminalText.length > 1) {
           // Changing
           let newDirectory = '';
@@ -337,27 +349,36 @@ ${data.delivery}`;
       if (terminalSpan) {
         terminalSpan.textContent = terminalHistory[historyIndex];
         setTerminalText(terminalHistory[historyIndex]);
+        selectLastElementOfTerminalText();
         setGetHistory(false);
       }
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [historyIndex, terminalHistory, getHistory, terminalSpan]);
+
+  enum TerminalHistoryKeys {
+    Command = 0,
+    Output = 1,
+    Directory = 2,
+    Colour = 3,
+  }
 
   return (
     <div className={styles.terminalBox}>
       <pre className={styles.banner}>{banner}</pre>
       <p>Welcome to my Terminal Portfolio</p>
       {terminalOutput.map((priorCmd, j) => {
-        // eslint-disable-next-line no-irregular-whitespace
-        const splitCmd = priorCmd[0].replace(/ /g, ' ').split(' ');
+        const splitCmd = priorCmd[TerminalHistoryKeys.Command]
+          // eslint-disable-next-line no-irregular-whitespace
+          .replace(/ /g, ' ')
+          .split(' ');
         const firstCmd = splitCmd[0];
         const remainingCmd = priorCmd[0].replace(firstCmd, '');
         return (
           <div key={j}>
-            <span className={styles.terminalLabel}>
-              guest@link477.com<span className={styles.greyText}>:</span>
-              <span className={styles.blueText}>{priorCmd[2]}</span>
-              <span className={styles.greyText}>$</span>&nbsp;
-            </span>
+            <TerminalPath
+              path={priorCmd[TerminalHistoryKeys.Directory]}
+            ></TerminalPath>
             <span
               className={
                 firstCmd.toLowerCase() in commands
@@ -368,17 +389,15 @@ ${data.delivery}`;
               {firstCmd}
             </span>
             <span className={styles.greyText}>{remainingCmd}</span>
-            <pre className={priorCmd.length >= 4 ? priorCmd[3] : ''}>
-              {priorCmd[1]}
+            <pre
+              className={`${priorCmd.length >= 4 ? priorCmd[TerminalHistoryKeys.Colour] : ''} ${styles.outputText}`}
+            >
+              {priorCmd[TerminalHistoryKeys.Output]}
             </pre>
           </div>
         );
       })}
-      <span className={styles.terminalLabel}>
-        guest@link477.com<span className={styles.greyText}>:</span>
-        <span className={styles.blueText}>{terminalPath}</span>
-        <span className={styles.greyText}>$</span>&nbsp;
-      </span>
+      <TerminalPath path={terminalPath}></TerminalPath>
       {getJoke ? (
         <>
           <span className={styles.terminal}>Joke</span>
@@ -394,10 +413,10 @@ ${data.delivery}`;
           contentEditable
           onInput={(e) => setTerminalText(e.currentTarget.textContent)}
           onKeyDown={(e) => {
-            if (e.key == 'Enter') {
+            if (e.key === 'Enter') {
               runCommands();
               e.preventDefault();
-            } else if (e.key == 'ArrowUp') {
+            } else if (e.key === 'ArrowUp') {
               let newHistIndex = historyIndex - 1;
               if (newHistIndex < 0) {
                 newHistIndex = terminalHistory.length - 1;
@@ -405,7 +424,7 @@ ${data.delivery}`;
               setHistoryIndex(newHistIndex);
               setGetHistory(true);
               e.preventDefault();
-            } else if (e.key == 'ArrowDown') {
+            } else if (e.key === 'ArrowDown') {
               let newHistIndex = historyIndex + 1;
               if (newHistIndex >= terminalHistory.length) {
                 newHistIndex = 0;
