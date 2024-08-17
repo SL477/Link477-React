@@ -5,6 +5,7 @@ export default function Home() {
     ['/arrays', 'Arrays'],
     ['/battleship', 'Battleship'],
     ['/gameoflife', 'Game Of Life'],
+    ['/recipeBox', 'Recipe Box'],
     ['/rockPaperScissors', 'Rock Paper Scissors'],
     ['/santaTracker', 'Santa Tracker'],
     ['terminal', 'Terminal'],

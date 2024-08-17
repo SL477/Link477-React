@@ -13,6 +13,7 @@ import TicTacToe from './ticTacToe/tictactoe';
 import SantaTracker from './santaTracker/santaTracker';
 import Home from './home';
 import Terminal from './terminal/terminal';
+import RecipeBox from './recipeBox/RecipeBox';
 
 const router = createHashRouter([
   {
@@ -50,6 +51,10 @@ const router = createHashRouter([
   {
     path: 'terminal',
     element: <Terminal />,
+  },
+  {
+    path: 'recipeBox',
+    element: <RecipeBox />,
   },
 ]);
 

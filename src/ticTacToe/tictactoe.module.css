@@ -1,43 +1,43 @@
 .tbl {
-    width: 300px;
-    height: 300px;
-    text-align: center;
-    font-weight: bold;
-    font-size: 50px;
-    vertical-align: middle;
-    margin-left: auto;
-    margin-right: auto;
+  width: 300px;
+  height: 300px;
+  text-align: center;
+  font-weight: bold;
+  font-size: 50px;
+  vertical-align: middle;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .td {
-    width: 100px;
-    vertical-align: middle;
-    height: 100px;
+  width: 100px;
+  vertical-align: middle;
+  height: 100px;
 }
 
 .centre {
-    margin-left: auto;
-    margin-right: auto;
-    text-align: center;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
 }
 
 .choose {
-    font-weight: bold;
-    font-size: 30;
+  font-weight: bold;
+  font-size: 30;
 }
 
 .scores {
-    text-align: center;
+  text-align: center;
 }
 
 .scoresTbl {
-    width: 300px;
-    margin-left: auto;
-    margin-right: auto;
-    text-align: center;
+  width: 300px;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
 }
 
 .th {
-    text-align: center;
-    width: 150px;
+  text-align: center;
+  width: 150px;
 }
