@@ -1,17 +1,17 @@
 .row {
-    display: flex;
-    margin-left: auto;
-    margin-right: auto;
+  display: flex;
+  margin-left: auto;
+  margin-right: auto;
 }
 .col {
-    border: 1px solid black;
-    width: 32px;
-    height: 32px;
+  border: 1px solid black;
+  width: 32px;
+  height: 32px;
 }
 h1 {
-    color: red;
+  color: red;
 }
 .hovered {
-    background-color: brown;
-    color: brown;
+  background-color: brown;
+  color: brown;
 }

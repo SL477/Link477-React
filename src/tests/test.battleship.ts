@@ -5,7 +5,7 @@
 //     console.log('position',position);
 //     let bs = new Ship(position,5,directions.UP);
 //     console.log('position',position);
-    
+
 //     //test creation
 //     if (!(bs.positions[0].x == position.x &&
 //     bs.positions[4].x == position.x &&
@@ -83,7 +83,7 @@
 //     console.log('Gameboard', gb);
 //     console.log('Gameboard stats', gb.getStats());
 //     console.log('Gameboard allowed moves', gb.getLegalMovesAgainstThisGameboard());
-    
+
 //     //Players
 //     let p = new Player(playerType.AI);
 //     p.setupBoard();

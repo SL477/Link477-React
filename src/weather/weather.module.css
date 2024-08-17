@@ -1,17 +1,17 @@
 .cap {
-    text-transform: capitalize;
+  text-transform: capitalize;
 }
 
 .weatherBox {
-    text-align: center;
-    color: gold;
-    height: calc(100vh - 76px);
-    min-height: 100%;
-    background-color: black;
+  text-align: center;
+  color: gold;
+  height: calc(100vh - 76px);
+  min-height: 100%;
+  background-color: black;
 }
 
 @media screen and (max-height: 402px) {
-    .weatherBox {
-        height: 100%;
-    }
+  .weatherBox {
+    height: 100%;
+  }
 }
