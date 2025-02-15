@@ -54,12 +54,18 @@
 .board {
   border: 1px solid black;
   padding: 20px;
+  background-color: white;
 }
 
 .grid {
   margin-left: auto;
   margin-right: auto;
 }
+
 .footer {
   display: none;
+}
+
+th {
+  color: black;
 }
