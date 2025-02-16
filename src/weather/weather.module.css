@@ -4,10 +4,9 @@
 
 .weatherBox {
   text-align: center;
-  color: gold;
+  color: light-dark(black, gold);
   height: calc(100vh - 76px);
   min-height: 100%;
-  background-color: black;
 }
 
 @media screen and (max-height: 402px) {

@@ -23,6 +23,12 @@
   border: solid red;
 }
 
+.btn-info {
+  background-color: #0dcaf0;
+  color: black;
+  border: solid #0dcaf0;
+}
+
 .mb-3 {
   margin-bottom: 1rem;
 }
@@ -46,4 +52,22 @@ fieldset {
   padding-inline: 0;
   padding-block: 0;
   margin-inline: 0;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.table-bordered td,
+.table-bordered th {
+  border: 1px solid black;
+}
+
+.table-bordered {
+  border-collapse: collapse;
+}
+
+.table {
+  background-color: white;
+  color: black;
 }
