@@ -33,6 +33,7 @@
   background: #a73517; /*24415470, c4caef*/
   background: linear-gradient(90deg, #a73517 0, #bd968c 78%);
   min-height: 100vh;
+  color: black;
 }
 
 .h1 {

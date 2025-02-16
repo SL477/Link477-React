@@ -1,17 +1,18 @@
 .banner {
   color: blue;
   text-align: center;
+  background-color: black;
 }
 
 .terminalBox {
-  color: gold;
-  min-height: 100vh;
-  background-color: black;
+  color: light-dark(black, gold) sd;
+  /* min-height: 100vh; */
+  /* background-color: black; */
 }
 
 .terminal {
   background-color: transparent;
-  color: white;
+  color: light-dark(black, white);
   border: none;
   width: 80%;
   height: 200px;
