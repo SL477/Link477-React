@@ -1,6 +1,12 @@
 import { useState } from 'react';
 import classes from './tictactoe.module.css';
 
+const opponentTypes = {
+  none: '',
+  AI: 'AI',
+  Human: 'human',
+};
+
 export default function TicTacToe() {
   const [currentGrid, setCurrentGrid] = useState<(number | string)[]>([
     0, 1, 2, 3, 4, 5, 6, 7, 8,
@@ -11,6 +17,10 @@ export default function TicTacToe() {
   const [message, setMessage] = useState('');
   const [humanScore, setHumanScore] = useState(0);
   const [AIScore, setAIScore] = useState(0);
+  const [OpponentType, setOpponentType] = useState('');
+  const [currentPlayer, setCurrentPlayer] = useState(0);
+  const [player1Name, setPlayer1Name] = useState('Player 1');
+  const [player2Name, setPlayer2Name] = useState('Player 2');
 
   const marks = {
     x: 'X',
@@ -153,7 +163,12 @@ export default function TicTacToe() {
     setTimeout(() => {
       setCurrentGrid([0, 1, 2, 3, 4, 5, 6, 7, 8]);
       setBlock(false);
-      setMessage('');
+      if (OpponentType === opponentTypes.AI) {
+        setMessage('');
+      } else {
+        setMessage(`${player1Name} turn`);
+        setCurrentPlayer(0);
+      }
     }, 3000);
   };
 
@@ -165,12 +180,25 @@ export default function TicTacToe() {
     console.log('test', index);
     if (displayValue(index) === ' ') {
       const currentBoardState = [...currentGrid];
-      currentBoardState[index] = humanMark;
+      currentBoardState[index] = currentPlayer === 0 ? humanMark : AIMark;
       setCurrentGrid(currentBoardState);
       setBlock(true);
 
-      if (checkIfWinnerFound(currentBoardState, humanMark)) {
-        setMessage('You won!');
+      if (
+        checkIfWinnerFound(
+          currentBoardState,
+          currentPlayer === 0 ? humanMark : AIMark
+        )
+      ) {
+        setMessage(
+          `${
+            OpponentType === opponentTypes.AI
+              ? 'You won!'
+              : currentPlayer === 0
+                ? player1Name
+                : player2Name
+          } won!`
+        );
         setHumanScore(humanScore + 1);
         resetGame();
       } else if (getAllEmptyCellsIndexes(currentBoardState).length === 0) {
@@ -178,123 +206,199 @@ export default function TicTacToe() {
         setMessage('Draw!');
         resetGame();
       } else {
-        setTimeout(() => {
-          const aiMove = miniMax(currentBoardState, AIMark);
-          console.log(aiMove);
-          if (aiMove.index && typeof aiMove.index === 'number') {
-            currentBoardState[aiMove.index] = AIMark;
-          } else {
-            currentBoardState[getAllEmptyCellsIndexes(currentBoardState)[0]] =
-              AIMark;
-          }
-          setCurrentGrid(currentBoardState);
+        if (OpponentType === opponentTypes.AI) {
+          setTimeout(() => {
+            const aiMove = miniMax(currentBoardState, AIMark);
+            console.log(aiMove);
+            if (aiMove.index && typeof aiMove.index === 'number') {
+              currentBoardState[aiMove.index] = AIMark;
+            } else {
+              currentBoardState[getAllEmptyCellsIndexes(currentBoardState)[0]] =
+                AIMark;
+            }
+            setCurrentGrid(currentBoardState);
+            setBlock(false);
+            if (checkIfWinnerFound(currentBoardState, AIMark)) {
+              setMessage('You lost!');
+              setAIScore(AIScore + 1);
+              resetGame();
+            } else if (
+              getAllEmptyCellsIndexes(currentBoardState).length === 0
+            ) {
+              setMessage('Draw!');
+              resetGame();
+            }
+          }, 1000);
+        } else {
           setBlock(false);
-          if (checkIfWinnerFound(currentBoardState, AIMark)) {
-            setMessage('You lost!');
-            setAIScore(AIScore + 1);
-            resetGame();
-          } else if (getAllEmptyCellsIndexes(currentBoardState).length === 0) {
-            setMessage('Draw!');
-            resetGame();
-          }
-        }, 1000);
+          setMessage(`${currentPlayer === 0 ? player2Name : player1Name} turn`);
+          setCurrentPlayer(currentPlayer === 0 ? 1 : 0);
+        }
       }
     } else {
       console.log('Position filled');
     }
   };
 
+  const chooseSide =
+    OpponentType === '' ? (
+      <>
+        <p className={classes.choose}>Choose your opponent's type:</p>
+        <button
+          className="btn btn-primary"
+          type="button"
+          onClick={() => setOpponentType(opponentTypes.AI)}
+        >
+          AI
+        </button>
+        <button
+          className="btn btn-primary"
+          type="button"
+          onClick={() => {
+            setOpponentType(opponentTypes.Human);
+          }}
+        >
+          Human
+        </button>
+      </>
+    ) : (
+      <>
+        <p className={classes.choose}>
+          {OpponentType === opponentTypes.AI
+            ? 'Choose your side'
+            : `${player1Name} side`}
+          :
+        </p>
+        <button
+          className="btn btn-primary"
+          onClick={() => {
+            setAIMark(marks.o);
+            setHumanMark(marks.x);
+            if (OpponentType === opponentTypes.Human) {
+              setMessage(`${player1Name} turn`);
+            }
+          }}
+          type="button"
+        >
+          X
+        </button>
+        <button
+          className="btn btn-primary"
+          onClick={() => {
+            setAIMark(marks.x);
+            setHumanMark(marks.o);
+            if (OpponentType === opponentTypes.Human) {
+              setMessage(`${player1Name} turn`);
+            }
+          }}
+          type="button"
+        >
+          O
+        </button>
+        {OpponentType === opponentTypes.AI ? (
+          ''
+        ) : (
+          <>
+            <br />
+            <label className="form-label">
+              Player 1 Name:
+              <input
+                type="text"
+                className="form-control"
+                value={player1Name}
+                onChange={(e) => setPlayer1Name(e.target.value)}
+              />
+            </label>
+            <label className="form-label">
+              Player 2 Name:
+              <input
+                type="text"
+                className="form-control"
+                value={player2Name}
+                onChange={(e) => setPlayer2Name(e.target.value)}
+              />
+            </label>
+          </>
+        )}
+      </>
+    );
+
+  const gameScreen = (
+    <>
+      <div className={classes.tbl}>
+        <table className="table table-bordered">
+          <tbody>
+            <tr>
+              <td className={classes.td} onClick={() => humanMove(0)}>
+                {displayValue(0)}
+              </td>
+              <td className={classes.td} onClick={() => humanMove(1)}>
+                {displayValue(1)}
+              </td>
+              <td className={classes.td} onClick={() => humanMove(2)}>
+                {displayValue(2)}
+              </td>
+            </tr>
+            <tr>
+              <td className={classes.td} onClick={() => humanMove(3)}>
+                {displayValue(3)}
+              </td>
+              <td className={classes.td} onClick={() => humanMove(4)}>
+                {displayValue(4)}
+              </td>
+              <td className={classes.td} onClick={() => humanMove(5)}>
+                {displayValue(5)}
+              </td>
+            </tr>
+            <tr>
+              <td className={classes.td} onClick={() => humanMove(6)}>
+                {displayValue(6)}
+              </td>
+              <td className={classes.td} onClick={() => humanMove(7)}>
+                {displayValue(7)}
+              </td>
+              <td className={classes.td} onClick={() => humanMove(8)}>
+                {displayValue(8)}
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <br />
+      <div className={classes.scoresTbl}>
+        <table className="table table-bordered">
+          <thead>
+            <tr>
+              <th className={`${classes.th} ${classes.centre}`}>
+                {OpponentType === opponentTypes.AI
+                  ? 'Your Score'
+                  : `${player1Name} Score`}
+              </th>
+              <th className={`${classes.th} ${classes.centre}`}>
+                {OpponentType === opponentTypes.AI
+                  ? 'Computer Score'
+                  : `${player2Name} Score`}
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>{humanScore}</td>
+              <td>{AIScore}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <p>{message}</p>
+      <button type="button" onClick={resetGame} className="btn btn-danger">
+        Reset
+      </button>
+    </>
+  );
+
   return (
     <div className={classes.centre}>
-      {humanMark === '' ? (
-        <>
-          <p className={classes.choose}>Choose your side:</p>
-          <button
-            className="btn btn-primary"
-            onClick={() => {
-              setAIMark(marks.o);
-              setHumanMark(marks.x);
-            }}
-            type="button"
-          >
-            X
-          </button>
-          <button
-            className="btn btn-primary"
-            onClick={() => {
-              setAIMark(marks.x);
-              setHumanMark(marks.o);
-            }}
-            type="button"
-          >
-            O
-          </button>
-        </>
-      ) : (
-        <>
-          <div className={classes.tbl}>
-            <table className="table table-bordered">
-              <tbody>
-                <tr>
-                  <td className={classes.td} onClick={() => humanMove(0)}>
-                    {displayValue(0)}
-                  </td>
-                  <td className={classes.td} onClick={() => humanMove(1)}>
-                    {displayValue(1)}
-                  </td>
-                  <td className={classes.td} onClick={() => humanMove(2)}>
-                    {displayValue(2)}
-                  </td>
-                </tr>
-                <tr>
-                  <td className={classes.td} onClick={() => humanMove(3)}>
-                    {displayValue(3)}
-                  </td>
-                  <td className={classes.td} onClick={() => humanMove(4)}>
-                    {displayValue(4)}
-                  </td>
-                  <td className={classes.td} onClick={() => humanMove(5)}>
-                    {displayValue(5)}
-                  </td>
-                </tr>
-                <tr>
-                  <td className={classes.td} onClick={() => humanMove(6)}>
-                    {displayValue(6)}
-                  </td>
-                  <td className={classes.td} onClick={() => humanMove(7)}>
-                    {displayValue(7)}
-                  </td>
-                  <td className={classes.td} onClick={() => humanMove(8)}>
-                    {displayValue(8)}
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-          <br />
-          <div className={classes.scoresTbl}>
-            <table className="table table-bordered">
-              <thead>
-                <tr>
-                  <th className={`${classes.th} ${classes.centre}`}>
-                    Your Score
-                  </th>
-                  <th className={`${classes.th} ${classes.centre}`}>
-                    Computer Score
-                  </th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td>{humanScore}</td>
-                  <td>{AIScore}</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-          <p>{message}</p>
-        </>
-      )}
+      {humanMark === '' ? chooseSide : gameScreen}
     </div>
   );
 }
