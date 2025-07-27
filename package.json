@@ -12,7 +12,6 @@
   "dependencies": {
     "@turf/midpoint": "^7.2.0",
     "@turf/turf": "^7.2.0",
-    "bootstrap": "^5.3.7",
     "leaflet": "^1.9.4",
     "leaflet.geodesic": "^2.7.1",
     "marked": "^16.1.1",
