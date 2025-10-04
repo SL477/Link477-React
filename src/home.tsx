@@ -4,6 +4,7 @@ export default function Home() {
   const routes = [
     ['/arrays', 'Arrays'],
     ['/battleship', 'Battleship'],
+    ['/cv', 'CV'],
     ['/gameoflife', 'Game Of Life'],
     ['/recipeBox', 'Recipe Box'],
     ['/rockPaperScissors', 'Rock Paper Scissors'],

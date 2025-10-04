@@ -14,6 +14,7 @@ import SantaTracker from './santaTracker/santaTracker';
 import Home from './home';
 import Terminal from './terminal/terminal';
 import RecipeBox from './recipeBox/RecipeBox';
+import CV from './cv/cv';
 
 const router = createHashRouter([
   { path: '/', element: <Home /> },
@@ -26,6 +27,7 @@ const router = createHashRouter([
   { path: '/santaTracker', element: <SantaTracker /> },
   { path: 'terminal', element: <Terminal /> },
   { path: 'recipeBox', element: <RecipeBox /> },
+  { path: '/cv', element: <CV /> },
 ]);
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
