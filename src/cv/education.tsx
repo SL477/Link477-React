@@ -19,6 +19,7 @@ interface EductionProps {
 export default function Education(props: EductionProps) {
   return (
     <>
+      <h2>Education</h2>
       <label htmlFor={`schoolName${props.id}`}>
         School Name:
         <input

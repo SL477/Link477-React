@@ -1,11 +1,13 @@
 import { useState } from 'react';
 import Education, { eductionCls } from './education';
+import Work, { workCls } from './work';
 
 export default function CV() {
   const [Name, setName] = useState('');
   const [Email, setEmail] = useState('');
   const [Phone, setPhone] = useState('');
   const [education, setEduction] = useState(new eductionCls());
+  const [work, setWork] = useState(new workCls());
   return (
     <main>
       <h1 className="centertext">CV</h1>
@@ -44,8 +46,8 @@ export default function CV() {
             onChange={(e) => setPhone(e.target.value)}
           />
         </label>
-        <h2>Education</h2>
         <Education id={1} setEduction={setEduction} eduction={education} />
+        <Work work={work} setWork={setWork} />
       </form>
     </main>
   );
