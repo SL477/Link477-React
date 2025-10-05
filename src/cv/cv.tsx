@@ -1,9 +1,11 @@
 import { useState } from 'react';
+import Education, { eductionCls } from './education';
 
 export default function CV() {
   const [Name, setName] = useState('');
   const [Email, setEmail] = useState('');
   const [Phone, setPhone] = useState('');
+  const [education, setEduction] = useState(new eductionCls());
   return (
     <main>
       <h1 className="centertext">CV</h1>
@@ -43,6 +45,7 @@ export default function CV() {
           />
         </label>
         <h2>Education</h2>
+        <Education id={1} setEduction={setEduction} eduction={education} />
       </form>
     </main>
   );
