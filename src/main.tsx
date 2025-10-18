@@ -15,6 +15,7 @@ import Home from './home';
 import Terminal from './terminal/terminal';
 import RecipeBox from './recipeBox/RecipeBox';
 import CV from './cv/cv';
+import MemoryCard from './memoryCard/memoryCard';
 
 const router = createHashRouter([
   { path: '/', element: <Home /> },
@@ -28,6 +29,7 @@ const router = createHashRouter([
   { path: 'terminal', element: <Terminal /> },
   { path: 'recipeBox', element: <RecipeBox /> },
   { path: '/cv', element: <CV /> },
+  { path: '/memoryCard', element: <MemoryCard /> },
 ]);
 
 ReactDOM.createRoot(document.getElementById('root')!).render(

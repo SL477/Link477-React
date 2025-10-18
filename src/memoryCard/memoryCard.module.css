@@ -1,0 +1,4 @@
+.scoreHolder {
+  grid-template-columns: 7fr 1fr;
+  display: grid;
+}
