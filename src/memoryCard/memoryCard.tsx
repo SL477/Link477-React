@@ -2,7 +2,7 @@ import { useState } from 'react';
 import classes from './memoryCard.module.css';
 export default function MemoryCard() {
   const [score] = useState(0);
-  const [bestScore] = useState(0);
+  const [bestScore] = useState(0); //TODO: save this to local storage
   return (
     <main>
       <h1 className="centertext">Memory Game</h1>
