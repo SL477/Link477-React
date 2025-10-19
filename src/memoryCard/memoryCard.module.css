@@ -12,6 +12,7 @@
   border: 1px solid light-dark(black, white);
   border-radius: 7.5px;
   padding-top: 5px;
+  cursor: pointer;
 }
 
 .pictureGrid {
