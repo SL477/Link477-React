@@ -16,30 +16,33 @@ class imgCard {
 
 export default function MemoryCard() {
   const [score, setScore] = useState(0);
-  const [bestScore, setBestScore] = useState(0); //TODO: save this to local storage
+  const [bestScore, setBestScore] = useState(0);
   const [clickedImgs, setClickedImgs] = useState<number[]>([]);
   const [newAntiochTeam, setNewAntiochTeam] = useState<imgCard[]>([]);
 
-  useEffect(
-    () =>
-      setNewAntiochTeam(
-        [
-          new imgCard(1, 'Engineer George', 'EngineerGeorge.jpg'),
-          new imgCard(2, 'Brother Julius', 'BrotherJulius.jpg'),
-          new imgCard(3, 'Lt Carstairs', 'LtCarstairs.jpg'),
-          new imgCard(4, 'Preacher Peter', 'PreacherPeter.jpg'),
-          new imgCard(5, 'Private Graham', 'PrivateGraham.jpg'),
-          new imgCard(6, 'Brother Matheus', 'BrotherMatheus.jpg'),
-          new imgCard(7, 'The Reaper', 'TheReaper.jpg'),
-        ].sort((i, j) => (i.sort > j.sort ? 1 : -1))
-      ),
-    []
-  );
+  useEffect(() => {
+    setNewAntiochTeam(
+      [
+        new imgCard(1, 'Engineer George', 'EngineerGeorge.jpg'),
+        new imgCard(2, 'Brother Julius', 'BrotherJulius.jpg'),
+        new imgCard(3, 'Lt Carstairs', 'LtCarstairs.jpg'),
+        new imgCard(4, 'Preacher Peter', 'PreacherPeter.jpg'),
+        new imgCard(5, 'Private Graham', 'PrivateGraham.jpg'),
+        new imgCard(6, 'Brother Matheus', 'BrotherMatheus.jpg'),
+        new imgCard(7, 'The Reaper', 'TheReaper.jpg'),
+      ].sort((i, j) => (i.sort > j.sort ? 1 : -1))
+    );
+    const bestScoreStored = localStorage.getItem('memoryCardScore');
+    if (bestScoreStored) {
+      setBestScore(Number.parseInt(bestScoreStored));
+    }
+  }, []);
 
   const clickedImg = (imgId: number) => {
     if (clickedImgs.includes(imgId)) {
       if (score > bestScore) {
         setBestScore(score);
+        localStorage.setItem('memoryCardScore', score.toString());
       }
       setScore(0);
       setClickedImgs([]);
