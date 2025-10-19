@@ -6,6 +6,7 @@ export default function Home() {
     ['/battleship', 'Battleship'],
     ['/cv', 'CV'],
     ['/gameoflife', 'Game Of Life'],
+    ['/memoryCard', 'Memory Card'],
     ['/recipeBox', 'Recipe Box'],
     ['/rockPaperScissors', 'Rock Paper Scissors'],
     ['/santaTracker', 'Santa Tracker'],
