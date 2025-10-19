@@ -1,8 +1,9 @@
 import { useState } from 'react';
 import classes from './memoryCard.module.css';
 export default function MemoryCard() {
-  const [score] = useState(0);
-  const [bestScore] = useState(0); //TODO: save this to local storage
+  const [score, setScore] = useState(0);
+  const [bestScore, setBestScore] = useState(0); //TODO: save this to local storage
+  const [clickedImgs, setClickedImgs] = useState<number[]>([]);
 
   const newAntiochTeam = [
     {
@@ -44,6 +45,19 @@ export default function MemoryCard() {
     { name: 'The Reaper', path: 'TheReaper.jpg', id: 7, sort: Math.random() },
   ];
 
+  const clickedImg = (imgId: number) => {
+    if (clickedImgs.includes(imgId)) {
+      if (score > bestScore) {
+        setBestScore(score);
+      }
+      setScore(0);
+      setClickedImgs([]);
+    } else {
+      setScore(score + 1);
+      setClickedImgs([...clickedImgs, imgId]);
+    }
+  };
+
   return (
     <main>
       <h1 className="centertext">Memory Game</h1>
@@ -62,7 +76,11 @@ export default function MemoryCard() {
         {newAntiochTeam
           .sort((i) => i.sort)
           .map((i) => (
-            <div key={i.id} className={classes.pictureHolder}>
+            <div
+              key={i.id}
+              className={classes.pictureHolder}
+              onClick={() => clickedImg(i.id)}
+            >
               <img src={`/Link477-React/${i.path}`} alt={i.name} />
               <p>{i.name}</p>
             </div>
