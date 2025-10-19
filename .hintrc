@@ -9,7 +9,8 @@
         "ignore": [
           "background-color: light-dark(white, black)",
           "color: light-dark(black, white)",
-          "color: light-dark(black, gold)"
+          "color: light-dark(black, gold)",
+          "border: 1px solid light-dark(black, white)"
         ]
       }
     ]
