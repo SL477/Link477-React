@@ -10,6 +10,7 @@ export default function Home() {
     ['/recipeBox', 'Recipe Box'],
     ['/rockPaperScissors', 'Rock Paper Scissors'],
     ['/santaTracker', 'Santa Tracker'],
+    ['/shop', 'Shop'],
     ['terminal', 'Terminal'],
     ['/tictactoe', 'Tic Tac Toe'],
     ['/weather', 'Weather'],
