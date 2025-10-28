@@ -20,13 +20,13 @@ export class imgCard {
 export interface OutletProps {
   newAntiochTeam: imgCard[];
   setNewAntiochTeam: Dispatch<SetStateAction<imgCard[]>>;
-  basket: { [key: string]: number };
-  setBasket: Dispatch<SetStateAction<{ [key: string]: number }>>;
+  basket: { [key: string]: string };
+  setBasket: Dispatch<SetStateAction<{ [key: string]: string }>>;
 }
 
 export default function Shop() {
   const [newAntiochTeam, setNewAntiochTeam] = useState<imgCard[]>([]);
-  const [basket, setBasket] = useState<{ [key: string]: number }>({});
+  const [basket, setBasket] = useState<{ [key: string]: string }>({});
 
   useEffect(
     () =>

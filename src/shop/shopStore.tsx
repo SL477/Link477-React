@@ -33,11 +33,13 @@ export default function ShopStore() {
       quantity = parseInt(newAntiochTeam[item.id].quantity);
     }
     if (newBasket[item.name]) {
-      newBasket[item.name] += quantity;
+      quantity += parseInt(newBasket[item.name]);
+      newBasket[item.name] = quantity.toString();
     } else {
-      newBasket[item.name] = quantity;
+      newBasket[item.name] = quantity.toString();
     }
     setBasket(newBasket);
+    setNewQuantity('', item.id, 0);
   };
 
   return (
