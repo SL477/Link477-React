@@ -16,6 +16,10 @@ import Terminal from './terminal/terminal';
 import RecipeBox from './recipeBox/RecipeBox';
 import CV from './cv/cv';
 import MemoryCard from './memoryCard/memoryCard';
+import Shop from './shop/shop';
+import ShopHome from './shop/shopHome';
+import ShopStore from './shop/shopStore';
+import ShopBasket from './shop/shopBasket';
 
 const router = createHashRouter([
   { path: '/', element: <Home /> },
@@ -26,6 +30,15 @@ const router = createHashRouter([
   { path: '/rockPaperScissors', element: <RockPaperScissors /> },
   { path: '/tictactoe', element: <TicTacToe /> },
   { path: '/santaTracker', element: <SantaTracker /> },
+  {
+    path: '/shop',
+    element: <Shop />,
+    children: [
+      { index: true, element: <ShopHome /> },
+      { path: 'store', element: <ShopStore /> },
+      { path: 'basket', element: <ShopBasket /> },
+    ],
+  },
   { path: 'terminal', element: <Terminal /> },
   { path: 'recipeBox', element: <RecipeBox /> },
   { path: '/cv', element: <CV /> },
