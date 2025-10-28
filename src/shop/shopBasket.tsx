@@ -31,6 +31,17 @@ export default function ShopBasket() {
     setBasket(newBasket);
   };
 
+  const grandTotal = Object.keys(basket)
+    .map((b) => {
+      const item = newAntiochTeam.filter((i) => i.name === b)[0];
+      let amount = 0;
+      if (parseInt(basket[b])) {
+        amount = item.price * parseInt(basket[b]);
+      }
+      return amount;
+    })
+    .reduce((partialSum, amt) => partialSum + amt, 0);
+
   return (
     <div>
       <h2>Basket</h2>
@@ -89,6 +100,9 @@ export default function ShopBasket() {
           </div>
         );
       })}
+      <p>
+        <b>Grand Total:</b> {grandTotal} Ducats
+      </p>
     </div>
   );
 }

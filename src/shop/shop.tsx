@@ -41,17 +41,16 @@ export default function Shop() {
     []
   );
   const numItems = Object.keys(basket).length;
+  const numItemsStr = numItems > 0 ? ' - ' + numItems : '';
 
   return (
     <div>
       <h1 className="centertext">Shop</h1>
       <div className={styles.gridContainer}>
         <nav className={styles.storeNav}>
-          <Link to="/shop">Home</Link>
-          <Link to="/shop/store">Store</Link>
-          <Link to="/shop/basket">
-            🧺 Basket {numItems > 0 ? ' - ' + numItems.toString() : ''}
-          </Link>
+          <Link to="/shop">🏠 Home</Link>
+          <Link to="/shop/store">🏬 Store</Link>
+          <Link to="/shop/basket">🛒 Basket {numItemsStr}</Link>
         </nav>
         <Outlet
           context={{ newAntiochTeam, setNewAntiochTeam, basket, setBasket }}
