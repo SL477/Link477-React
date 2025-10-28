@@ -1,0 +1,10 @@
+.storeNav {
+  a {
+    display: block;
+  }
+}
+
+.gridContainer {
+  display: grid;
+  grid-template-columns: 125px auto;
+}
