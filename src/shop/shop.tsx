@@ -36,7 +36,8 @@ export default function Shop() {
         new imgCard(2, 'Lieutenant', 'LtCarstairs.jpg', 70),
         new imgCard(3, 'Trench Cleric', 'PreacherPeter.jpg', 60),
         new imgCard(4, 'Mechanised Heavy Infantry', 'TheReaper.jpg', 85),
-        new imgCard(5, 'Machine Gun Priest', 'BrotherMatheus.jpg', 50),
+        new imgCard(5, 'Shocktroopers', 'PrivateJones.jpg', 45),
+        new imgCard(6, 'Yeoman', 'Lyle.jpg', 35),
       ]),
     []
   );
