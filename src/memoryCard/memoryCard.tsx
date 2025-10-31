@@ -31,7 +31,7 @@ export default function MemoryCard() {
         new imgCard(6, 'Brother Matheus', 'BrotherMatheus.jpg'),
         new imgCard(7, 'The Reaper', 'TheReaper.jpg'),
         new imgCard(8, 'Brutus', 'Brutus.jpg'),
-        new imgCard(9, 'Private George', 'PrivateGeorge.jpg'),
+        new imgCard(9, 'Private Chris', 'PrivateChris.jpg'),
         new imgCard(10, 'Sgt Smith', 'SgtSmith.jpg'),
         new imgCard(11, 'Private Darius', 'PrivateDarius.jpg'),
         new imgCard(12, 'Private Jones', 'PrivateJones.jpg'),

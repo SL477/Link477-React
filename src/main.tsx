@@ -20,6 +20,7 @@ import Shop from './shop/shop';
 import ShopHome from './shop/shopHome';
 import ShopStore from './shop/shopStore';
 import ShopBasket from './shop/shopBasket';
+import WheresWaldo from './wheresWaldo/wheresWaldo';
 
 const router = createHashRouter([
   { path: '/', element: <Home /> },
@@ -43,6 +44,7 @@ const router = createHashRouter([
   { path: 'recipeBox', element: <RecipeBox /> },
   { path: '/cv', element: <CV /> },
   { path: '/memoryCard', element: <MemoryCard /> },
+  { path: '/wheresGeorge', element: <WheresWaldo /> },
 ]);
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
