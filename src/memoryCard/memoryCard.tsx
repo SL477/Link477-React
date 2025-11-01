@@ -30,6 +30,15 @@ export default function MemoryCard() {
         new imgCard(5, 'Private Graham', 'PrivateGraham.jpg'),
         new imgCard(6, 'Brother Matheus', 'BrotherMatheus.jpg'),
         new imgCard(7, 'The Reaper', 'TheReaper.jpg'),
+        new imgCard(8, 'Brutus', 'Brutus.jpg'),
+        new imgCard(9, 'Private Chris', 'PrivateChris.jpg'),
+        new imgCard(10, 'Sgt Smith', 'SgtSmith.jpg'),
+        new imgCard(11, 'Private Darius', 'PrivateDarius.jpg'),
+        new imgCard(12, 'Private Jones', 'PrivateJones.jpg'),
+        new imgCard(13, 'Sam', 'Sam.jpg'),
+        new imgCard(14, 'Specialist Mark', 'SpecialistMark.jpg'),
+        new imgCard(15, 'Gustav', 'Gustav.jpg'),
+        new imgCard(16, 'Lyle', 'Lyle.jpg'),
       ].sort((i, j) => (i.sort > j.sort ? 1 : -1))
     );
     const bestScoreStored = localStorage.getItem('memoryCardScore');

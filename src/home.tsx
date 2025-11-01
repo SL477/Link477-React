@@ -14,6 +14,7 @@ export default function Home() {
     ['terminal', 'Terminal'],
     ['/tictactoe', 'Tic Tac Toe'],
     ['/weather', 'Weather'],
+    ['/wheresGeorge', "Where's George?"],
   ];
 
   return (
