@@ -86,7 +86,7 @@ export default function WheresWaldo() {
             alt={i.name}
             coords={i.coords}
             shape="rect"
-            onClick={() => imgFinder(i.name)}
+            onClick={(e) => {e.preventDefault();imgFinder(i.name)}}
           />
         ))}
       </map>
