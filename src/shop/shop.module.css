@@ -39,3 +39,63 @@
     grid-template-columns: 1fr 1fr;
   }
 }
+
+.basketContainer {
+  max-width: 350px;
+  margin: auto;
+  border-radius: 2.5rem;
+  background-color: white;
+  font-size: 18px;
+  padding-bottom: 5px;
+  color: black;
+  text-align: center;
+
+  h2 {
+    color: hsl(223, 47%, 23%);
+  }
+
+  p {
+    color: hsl(224, 23%, 55%);
+  }
+
+  h3 {
+    color: hsl(223, 47%, 23%);
+    margin-block-start: 0;
+    margin-block-end: 0;
+  }
+}
+
+.basketContainerTop {
+  height: 140px;
+  max-width: 350px;
+  margin: auto;
+  border-top-left-radius: 2.5rem;
+  border-top-right-radius: 2.5rem;
+
+  img {
+    border-top-left-radius: 2.5rem;
+    border-top-right-radius: 2.5rem;
+    border: 1px solid transparent;
+  }
+}
+
+.previewPic {
+  border-radius: 50%;
+}
+
+.basketItem {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+}
+
+.btnPlain {
+  border: none;
+  color: hsl(223, 47%, 23%);
+  background-color: white;
+}
+
+.btnPurple {
+  background-color: hsl(223, 47%, 23%);
+  color: hsl(225, 100%, 94%);
+  width: 90%;
+}

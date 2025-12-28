@@ -23,22 +23,22 @@ export default function MemoryCard() {
   useEffect(() => {
     setNewAntiochTeam(
       [
-        new imgCard(1, 'Engineer George', 'EngineerGeorge.jpg'),
-        new imgCard(2, 'Brother Julius', 'BrotherJulius.jpg'),
-        new imgCard(3, 'Lt Carstairs', 'LtCarstairs.jpg'),
-        new imgCard(4, 'Preacher Peter', 'PreacherPeter.jpg'),
-        new imgCard(5, 'Private Graham', 'PrivateGraham.jpg'),
-        new imgCard(6, 'Brother Matheus', 'BrotherMatheus.jpg'),
-        new imgCard(7, 'The Reaper', 'TheReaper.jpg'),
-        new imgCard(8, 'Brutus', 'Brutus.jpg'),
-        new imgCard(9, 'Private Chris', 'PrivateChris.jpg'),
-        new imgCard(10, 'Sgt Smith', 'SgtSmith.jpg'),
-        new imgCard(11, 'Private Darius', 'PrivateDarius.jpg'),
-        new imgCard(12, 'Private Jones', 'PrivateJones.jpg'),
-        new imgCard(13, 'Sam', 'Sam.jpg'),
-        new imgCard(14, 'Specialist Mark', 'SpecialistMark.jpg'),
-        new imgCard(15, 'Gustav', 'Gustav.jpg'),
-        new imgCard(16, 'Lyle', 'Lyle.jpg'),
+        new imgCard(1, 'Engineer George', 'EngineerGeorge'),
+        new imgCard(2, 'Brother Julius', 'BrotherJulius'),
+        new imgCard(3, 'Lt Carstairs', 'LtCarstairs'),
+        new imgCard(4, 'Preacher Peter', 'PreacherPeter'),
+        new imgCard(5, 'Private Graham', 'PrivateGraham'),
+        new imgCard(6, 'Brother Matheus', 'BrotherMatheus'),
+        new imgCard(7, 'The Reaper', 'TheReaper'),
+        new imgCard(8, 'Brutus', 'Brutus'),
+        new imgCard(9, 'Private Chris', 'PrivateChris'),
+        new imgCard(10, 'Sgt Smith', 'SgtSmith'),
+        new imgCard(11, 'Private Darius', 'PrivateDarius'),
+        new imgCard(12, 'Private Jones', 'PrivateJones'),
+        new imgCard(13, 'Sam', 'Sam'),
+        new imgCard(14, 'Specialist Mark', 'SpecialistMark'),
+        new imgCard(15, 'Gustav', 'Gustav'),
+        new imgCard(16, 'Lyle', 'Lyle'),
       ].sort((i, j) => (i.sort > j.sort ? 1 : -1))
     );
     const bestScoreStored = localStorage.getItem('memoryCardScore');
@@ -91,7 +91,11 @@ export default function MemoryCard() {
             className={classes.pictureHolder}
             onClick={() => clickedImg(i.id)}
           >
-            <img src={`/Link477-React/${i.path}`} alt={i.name} />
+            <picture>
+              <source srcSet={`/Link477-React/${i.path}.webp`} type='image/webp'/>
+              <source srcSet={`/Link477-React/${i.path}.jpg`} type='image/jpg'/>
+              <img src={`/Link477-React/${i.path}.jpg`} alt={i.name} />
+            </picture>
             <p>{i.name}</p>
           </div>
         ))}

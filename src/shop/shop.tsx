@@ -31,13 +31,13 @@ export default function Shop() {
   useEffect(
     () =>
       setNewAntiochTeam([
-        new imgCard(0, 'Combat Engineer', 'EngineerGeorge.jpg', 80),
-        new imgCard(1, 'Sniper Priest', 'BrotherJulius.jpg', 50),
-        new imgCard(2, 'Lieutenant', 'LtCarstairs.jpg', 70),
-        new imgCard(3, 'Trench Cleric', 'PreacherPeter.jpg', 60),
-        new imgCard(4, 'Mechanised Heavy Infantry', 'TheReaper.jpg', 85),
-        new imgCard(5, 'Shocktroopers', 'PrivateJones.jpg', 45),
-        new imgCard(6, 'Yeoman', 'Lyle.jpg', 35),
+        new imgCard(0, 'Combat Engineer', 'EngineerGeorge', 80),
+        new imgCard(1, 'Sniper Priest', 'BrotherJulius', 50),
+        new imgCard(2, 'Lieutenant', 'LtCarstairs', 70),
+        new imgCard(3, 'Trench Cleric', 'PreacherPeter', 60),
+        new imgCard(4, 'Mechanised Heavy Infantry', 'TheReaper', 85),
+        new imgCard(5, 'Shocktroopers', 'PrivateJones', 45),
+        new imgCard(6, 'Yeoman', 'Lyle', 35),
       ]),
     []
   );
