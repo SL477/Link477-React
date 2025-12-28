@@ -72,13 +72,17 @@ export default function WheresWaldo() {
   return (
     <main>
       <h1 className="centertext">Where's George?</h1>
-      <img
-        src="/Link477-React/TrenchCrusade.jpg"
-        alt="Trench Crusade New Antioch Warband."
-        width="100%"
-        useMap="#trenchMap"
-        ref={img}
-      />
+      <picture>
+        <source srcSet='/Link477-React/TrenchCrusade.webp' type='image/webp'/>
+        <source srcSet='/Link477-React/TrenchCrusade.jpg' type='image/jpg'/>
+        <img
+          src="/Link477-React/TrenchCrusade.jpg"
+          alt="Trench Crusade New Antioch Warband."
+          width="100%"
+          useMap="#trenchMap"
+          ref={img}
+        />
+      </picture>
       <map name="trenchMap" ref={htmlMap}>
         {imgMaps.map((i) => (
           <area
@@ -91,12 +95,16 @@ export default function WheresWaldo() {
         ))}
       </map>
       <p>{msg}</p>
-      <img
-        src="/Link477-React/EngineerGeorge.jpg"
-        alt="Engineer George"
-        height={200}
-        width={125}
-      />
+      <picture>
+        <source srcSet='/Link477-React/EngineerGeorge.webp' type='image/webp'/>
+        <source srcSet='/Link477-React/EngineerGeorge.jpg' type='image/jpg'/>
+        <img
+          src="/Link477-React/EngineerGeorge.jpg"
+          alt="Engineer George"
+          height={200}
+          width={125}
+        />
+      </picture>
     </main>
   );
 }

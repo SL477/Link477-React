@@ -50,12 +50,22 @@ export default function ShopBasket() {
         return (
           <div key={b}>
             <h3>{b}</h3>
-            <img
-              height={200}
-              width={125}
-              src={`/Link477-React/${item.path}`}
-              alt={b}
-            />
+            <picture>
+              <source
+                srcSet={`/Link477-React/${item.path}.webp`}
+                type="image/webp"
+              />
+              <source
+                srcSet={`/Link477-React/${item.path}.jpg`}
+                type="image/jpg"
+              />
+              <img
+                height={200}
+                width={125}
+                src={`/Link477-React/${item.path}.jpg`}
+                alt={b}
+              />
+            </picture>
             <br />
             <label>
               Quantity:

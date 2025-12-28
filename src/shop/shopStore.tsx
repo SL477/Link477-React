@@ -46,7 +46,14 @@ export default function ShopStore() {
     <div className={styles.pictureGrid}>
       {newAntiochTeam.map((i) => (
         <div key={i.id} className={styles.pictureHolder}>
-          <img src={`/Link477-React/${i.path}`} alt={i.name} />
+          <picture>
+            <source
+              srcSet={`/Link477-React/${i.path}.webp`}
+              type="image/webp"
+            />
+            <source srcSet={`/Link477-React/${i.path}.jpg`} type="image/jpg" />
+            <img src={`/Link477-React/${i.path}.jpg`} alt={i.name} />
+          </picture>
           <p>{i.name}</p>
           <div>
             <button
